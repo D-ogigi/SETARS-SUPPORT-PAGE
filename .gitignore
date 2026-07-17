@@ -1,0 +1,16 @@
+# macOSが自動作成する隠しファイル（一番邪魔になりやすいもの）
+.DS_Store
+
+# Claudeの自動生成・設定フォルダ
+.claude/
+.clauderules
+
+# 一時的なログやキャッシュ
+*.log
+.cache/
+
+# もし万が一、アプリのソースコード一式を間違えて入れてしまった場合の安全策
+*.swift
+*.xcodeproj/
+build/
+.build/
