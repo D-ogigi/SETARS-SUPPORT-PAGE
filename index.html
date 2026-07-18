@@ -1,658 +1,929 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja" id="html-root">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-i18n="meta.title">setars | アプリポートフォリオ & サポート窓口</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="meta.title">
+      setars | アプリポートフォリオ & サポート窓口
+    </title>
 
-<!-- Tailwind CSS (CDN) -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  // Tailwind の拡張設定：やわらかいグラデーション背景で使う色を追加
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: {
-          sans: ['"Hiragino Sans"', '"Hiragino Kaku Gothic ProN"', '"Noto Sans JP"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Tailwind の拡張設定：やわらかいグラデーション背景で使う色を追加
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                '"Hiragino Sans"',
+                '"Hiragino Kaku Gothic ProN"',
+                '"Noto Sans JP"',
+                "ui-sans-serif",
+                "system-ui",
+                "sans-serif",
+              ],
+            },
+            boxShadow: {
+              glass: "0 8px 32px 0 rgba(31, 38, 135, 0.15)",
+            },
+          },
         },
-        boxShadow: {
-          glass: '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
-        },
-      },
-    },
-  };
-</script>
+      };
+    </script>
 
-<style>
-  /* ページ全体の淡いグラデーション背景（白・薄ピンク・薄紫） */
-  body {
-    background: linear-gradient(135deg, #fdf2f8 0%, #ffffff 35%, #f5f3ff 70%, #fdf2f8 100%);
-    background-attachment: fixed;
-  }
+    <style>
+      /* ページ全体の淡いグラデーション背景（白・薄ピンク・薄紫） */
+      body {
+        background: linear-gradient(
+          135deg,
+          #fdf2f8 0%,
+          #ffffff 35%,
+          #f5f3ff 70%,
+          #fdf2f8 100%
+        );
+        background-attachment: fixed;
+      }
 
-  /* グラスモーフィズム（磨りガラス）カード */
-  .glass-card {
-    background: rgba(255, 255, 255, 0.55);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-  }
+      /* グラスモーフィズム（磨りガラス）カード */
+      .glass-card {
+        background: rgba(255, 255, 255, 0.55);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+      }
 
-  .glass-strong {
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.7);
-  }
+      .glass-strong {
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+      }
 
-  /* ホバー時のリッチな拡大アニメーション */
-  .hover-lift {
-    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
-  }
-  .hover-lift:hover {
-    transform: translateY(-6px) scale(1.015);
-  }
+      /* ホバー時のリッチな拡大アニメーション */
+      .hover-lift {
+        transition:
+          transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.35s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-6px) scale(1.015);
+      }
 
-  .btn-press {
-    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
-  }
-  .btn-press:hover {
-    transform: translateY(-2px);
-  }
-  .btn-press:active {
-    transform: translateY(0) scale(0.98);
-  }
+      .btn-press {
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease,
+          opacity 0.15s ease;
+      }
+      .btn-press:hover {
+        transform: translateY(-2px);
+      }
+      .btn-press:active {
+        transform: translateY(0) scale(0.98);
+      }
 
-  /* アプリアイコン：画像 or CSSグラデーションへの自動フォールバック */
-  .app-icon-wrap {
-    width: 84px;
-    height: 84px;
-    border-radius: 22px;
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 10px 24px -6px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.4);
-  }
-  .app-icon-fallback-letter {
-    color: #fff;
-    font-weight: 800;
-    font-size: 1.9rem;
-  }
-  .app-icon-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+      /* アプリアイコン：画像 or CSSグラデーションへの自動フォールバック */
+      .app-icon-wrap {
+        width: 84px;
+        height: 84px;
+        border-radius: 22px;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow:
+          0 10px 24px -6px rgba(0, 0, 0, 0.25),
+          inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      }
+      .app-icon-fallback-letter {
+        color: #fff;
+        font-weight: 800;
+        font-size: 1.9rem;
+      }
+      .app-icon-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
 
-  /* 言語切替トグル */
-  .lang-toggle-btn {
-    transition: all 0.25s ease;
-  }
-  .lang-toggle-btn.active {
-    background: rgba(99, 102, 241, 0.9);
-    color: #fff;
-    box-shadow: 0 4px 12px -2px rgba(99,102,241,0.5);
-  }
+      /* 言語切替トグル */
+      .lang-toggle-btn {
+        transition: all 0.25s ease;
+      }
+      .lang-toggle-btn.active {
+        background: rgba(99, 102, 241, 0.9);
+        color: #fff;
+        box-shadow: 0 4px 12px -2px rgba(99, 102, 241, 0.5);
+      }
 
-  /* Coming Soon リボン */
-  .ribbon {
-    position: absolute;
-    top: 14px;
-    right: -8px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    padding: 4px 14px;
-    border-radius: 999px 0 0 999px;
-    background: linear-gradient(135deg, #f59e0b, #f97316);
-    color: #fff;
-    box-shadow: 0 4px 10px -2px rgba(249,115,22,0.5);
-    z-index: 10;
-  }
+      /* Coming Soon リボン */
+      .ribbon {
+        position: absolute;
+        top: 14px;
+        right: -8px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        padding: 4px 14px;
+        border-radius: 999px 0 0 999px;
+        background: linear-gradient(135deg, #f59e0b, #f97316);
+        color: #fff;
+        box-shadow: 0 4px 10px -2px rgba(249, 115, 22, 0.5);
+        z-index: 10;
+      }
 
-  /* アコーディオンの矢印回転 */
-  details > summary {
-    list-style: none;
-  }
-  details > summary::-webkit-details-marker {
-    display: none;
-  }
-  details summary .chev {
-    transition: transform 0.3s ease;
-  }
-  details[open] summary .chev {
-    transform: rotate(180deg);
-  }
+      /* アコーディオンの矢印回転 */
+      details > summary {
+        list-style: none;
+      }
+      details > summary::-webkit-details-marker {
+        display: none;
+      }
+      details summary .chev {
+        transition: transform 0.3s ease;
+      }
+      details[open] summary .chev {
+        transform: rotate(180deg);
+      }
 
-  /* フォームのフォーカスリング */
-  .form-field:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.35);
-    border-color: rgba(139, 92, 246, 0.6);
-  }
+      /* フォームのフォーカスリング */
+      .form-field:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.35);
+        border-color: rgba(139, 92, 246, 0.6);
+      }
 
-  /* App Store風ダウンロードボタン（独自デザイン。Apple公式バッジ画像は使用していません） */
-  .appstore-btn {
-    background: linear-gradient(135deg, #111827, #1f2937);
-  }
-</style>
-</head>
+      /* App Store風ダウンロードボタン（独自デザイン。Apple公式バッジ画像は使用していません） */
+      .appstore-btn {
+        background: linear-gradient(135deg, #111827, #1f2937);
+      }
+    </style>
+  </head>
 
-<body class="min-h-screen text-gray-800 antialiased font-sans">
+  <body class="min-h-screen text-gray-800 antialiased font-sans">
+    <!-- ===================== ヘッダー（言語切替トグル） ===================== -->
+    <header class="sticky top-0 z-50">
+      <div class="glass-card border-b border-white/50">
+        <div
+          class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between"
+        >
+          <div class="flex items-center gap-2">
+            <div
+              class="w-8 h-8 rounded-xl bg-gradient-to-br from-pink-400 via-purple-400 to-indigo-500 shadow-md"
+            ></div>
+            <span class="font-bold text-gray-700 tracking-tight">setars</span>
+          </div>
 
-<!-- ===================== ヘッダー（言語切替トグル） ===================== -->
-<header class="sticky top-0 z-50">
-  <div class="glass-card border-b border-white/50">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-pink-400 via-purple-400 to-indigo-500 shadow-md"></div>
-        <span class="font-bold text-gray-700 tracking-tight">setars</span>
+          <!-- 言語切替：日本語 / English -->
+          <div
+            id="lang-toggle"
+            class="flex items-center gap-1 bg-white/60 rounded-full p-1 border border-white/70 shadow-sm"
+          >
+            <button
+              type="button"
+              data-lang="ja"
+              class="lang-toggle-btn px-3 sm:px-4 py-1.5 rounded-full text-sm font-medium text-gray-600"
+            >
+              日本語
+            </button>
+            <button
+              type="button"
+              data-lang="en"
+              class="lang-toggle-btn px-3 sm:px-4 py-1.5 rounded-full text-sm font-medium text-gray-600"
+            >
+              English
+            </button>
+          </div>
+        </div>
       </div>
+    </header>
 
-      <!-- 言語切替：日本語 / English -->
-      <div id="lang-toggle" class="flex items-center gap-1 bg-white/60 rounded-full p-1 border border-white/70 shadow-sm">
-        <button type="button" data-lang="ja" class="lang-toggle-btn px-3 sm:px-4 py-1.5 rounded-full text-sm font-medium text-gray-600">日本語</button>
-        <button type="button" data-lang="en" class="lang-toggle-btn px-3 sm:px-4 py-1.5 rounded-full text-sm font-medium text-gray-600">English</button>
-      </div>
-    </div>
-  </div>
-</header>
+    <main>
+      <!-- ===================== ヒーローセクション ===================== -->
+      <section class="text-center pt-16 sm:pt-20 pb-12 px-4">
+        <h1
+          data-i18n="hero.title"
+          class="text-3xl sm:text-5xl font-extrabold tracking-tight text-gray-800 mb-4"
+        >
+          私たちが創るアプリの世界
+        </h1>
+        <p
+          data-i18n="hero.subtitle"
+          class="max-w-2xl mx-auto text-gray-500 text-base sm:text-lg leading-relaxed"
+        >
+          美しく、使いやすいアプリケーション体験をお届けします。ご質問・ご要望はいつでもお気軽にお問い合わせください。
+        </p>
+      </section>
 
-<main>
-
-  <!-- ===================== ヒーローセクション ===================== -->
-  <section class="text-center pt-16 sm:pt-20 pb-12 px-4">
-    <h1 data-i18n="hero.title" class="text-3xl sm:text-5xl font-extrabold tracking-tight text-gray-800 mb-4">
-      私たちが創るアプリの世界
-    </h1>
-    <p data-i18n="hero.subtitle" class="max-w-2xl mx-auto text-gray-500 text-base sm:text-lg leading-relaxed">
-      美しく、使いやすいアプリケーション体験をお届けします。ご質問・ご要望はいつでもお気軽にお問い合わせください。
-    </p>
-  </section>
-
-  <!-- ===================== アプリショーケース =====================
+      <!-- ===================== アプリショーケース =====================
        カードはJavaScript内の myApps 配列からループ処理で自動生成されます。
        新しいアプリを追加する場合は、HTMLを編集せず myApps 配列に要素を追加するだけで完結します。 -->
-  <section id="showcase" class="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
-    <h2 data-i18n="showcase.title" class="text-2xl font-bold text-gray-700 mb-6 text-center sm:text-left">
-      アプリケーション一覧
-    </h2>
+      <section id="showcase" class="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
+        <h2
+          data-i18n="showcase.title"
+          class="text-2xl font-bold text-gray-700 mb-6 text-center sm:text-left"
+        >
+          アプリケーション一覧
+        </h2>
 
-    <div id="showcase-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-      <!-- ここに myApps から生成されたカードが挿入されます -->
-    </div>
-  </section>
-
-  <!-- ===================== お問い合わせフォーム ===================== -->
-  <section id="contact" class="max-w-3xl mx-auto px-4 sm:px-6 pb-16">
-    <div class="glass-strong rounded-3xl shadow-glass p-6 sm:p-10">
-      <h2 data-i18n="contact.title" class="text-2xl font-bold text-gray-700 mb-2 text-center">お問い合わせ</h2>
-      <p data-i18n="contact.subtitle" class="text-gray-500 text-sm text-center mb-8">
-        バグ報告、機能のご要望、その他のご質問など、どんなことでもお気軽にご連絡ください。全て無料でサポートいたします。
-      </p>
-
-      <!--
-        送信先メールアドレスについて：
-        下記の action URL の "your-email@gmail.com" を、あなた自身のGmailアドレスに書き換えてください。
-        例）https://formsubmit.co/example.support@gmail.com
-        ※ 初回送信時にformsubmit.coから確認メールが届くので、そのメール内のリンクをクリックして有効化してください。
-      -->
-      <form id="contact-form" action="https://formsubmit.co/your-email@gmail.com" method="POST" class="space-y-5">
-
-        <!-- 件名はJavaScriptで送信直前に動的に組み立てます -->
-        <input type="hidden" name="_subject" id="subject-field" value="">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <div>
-            <label data-i18n="contact.labelApp" class="block text-sm font-semibold text-gray-600 mb-1.5">対象アプリ</label>
-            <!-- 選択肢はJavaScript内の myApps 配列から自動生成されます -->
-            <select id="app-select" name="app" required
-                    class="form-field w-full rounded-xl border border-gray-200 bg-white/80 px-4 py-2.5 text-sm"></select>
-          </div>
-
-          <div>
-            <label data-i18n="contact.labelCategory" class="block text-sm font-semibold text-gray-600 mb-1.5">お問い合わせ用件</label>
-            <select id="category-select" name="category" required
-                    class="form-field w-full rounded-xl border border-gray-200 bg-white/80 px-4 py-2.5 text-sm">
-              <option value="Bug Report" data-i18n="contact.optionCategoryBug">バグ報告</option>
-              <option value="Feature Request" data-i18n="contact.optionCategoryFeature">機能要望</option>
-              <option value="General Inquiry" data-i18n="contact.optionCategoryOther">その他一般</option>
-            </select>
-          </div>
+        <div
+          id="showcase-grid"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+        >
+          <!-- ここに myApps から生成されたカードが挿入されます -->
         </div>
+      </section>
 
-        <div>
-          <label data-i18n="contact.labelName" class="block text-sm font-semibold text-gray-600 mb-1.5">お名前</label>
-          <input type="text" id="name-field" name="name" required
-                 data-i18n-placeholder="contact.placeholderName" placeholder="山田 太郎"
-                 class="form-field w-full rounded-xl border border-gray-200 bg-white/80 px-4 py-2.5 text-sm">
+      <!-- ===================== お問い合わせフォーム ===================== -->
+      <section id="contact" class="max-w-3xl mx-auto px-4 sm:px-6 pb-16">
+        <div class="glass-strong rounded-3xl shadow-glass p-6 sm:p-10">
+          <h2
+            data-i18n="contact.title"
+            class="text-2xl font-bold text-gray-700 mb-2 text-center"
+          >
+            お問い合わせ
+          </h2>
+          <p
+            data-i18n="contact.subtitle"
+            class="text-gray-500 text-sm text-center mb-8"
+          >
+            バグ報告、機能のご要望、その他のご質問など、どんなことでもお気軽にご連絡ください。全て無料でサポートいたします。
+          </p>
+
+          <form
+            id="contact-form"
+            action="https://formsubmit.co/setars.support@gmail.com"
+            method="POST"
+            class="space-y-5"
+          >
+            <!-- 件名はJavaScriptで送信直前に動的に組み立てます -->
+            <input type="hidden" name="_subject" id="subject-field" value="" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label
+                  data-i18n="contact.labelApp"
+                  class="block text-sm font-semibold text-gray-600 mb-1.5"
+                  >対象アプリ</label
+                >
+                <!-- 選択肢はJavaScript内の myApps 配列から自動生成されます -->
+                <select
+                  id="app-select"
+                  name="app"
+                  required
+                  class="form-field w-full rounded-xl border border-gray-200 bg-white/80 px-4 py-2.5 text-sm"
+                ></select>
+              </div>
+
+              <div>
+                <label
+                  data-i18n="contact.labelCategory"
+                  class="block text-sm font-semibold text-gray-600 mb-1.5"
+                  >お問い合わせ用件</label
+                >
+                <select
+                  id="category-select"
+                  name="category"
+                  required
+                  class="form-field w-full rounded-xl border border-gray-200 bg-white/80 px-4 py-2.5 text-sm"
+                >
+                  <option
+                    value="Bug Report"
+                    data-i18n="contact.optionCategoryBug"
+                  >
+                    バグ報告
+                  </option>
+                  <option
+                    value="Feature Request"
+                    data-i18n="contact.optionCategoryFeature"
+                  >
+                    機能要望
+                  </option>
+                  <option
+                    value="General Inquiry"
+                    data-i18n="contact.optionCategoryOther"
+                  >
+                    その他一般
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label
+                data-i18n="contact.labelName"
+                class="block text-sm font-semibold text-gray-600 mb-1.5"
+                >お名前</label
+              >
+              <input
+                type="text"
+                id="name-field"
+                name="name"
+                required
+                data-i18n-placeholder="contact.placeholderName"
+                placeholder="山田 太郎"
+                class="form-field w-full rounded-xl border border-gray-200 bg-white/80 px-4 py-2.5 text-sm"
+              />
+            </div>
+
+            <div>
+              <label
+                data-i18n="contact.labelEmail"
+                class="block text-sm font-semibold text-gray-600 mb-1.5"
+                >メールアドレス</label
+              >
+              <input
+                type="email"
+                name="email"
+                required
+                data-i18n-placeholder="contact.placeholderEmail"
+                placeholder="you@example.com"
+                class="form-field w-full rounded-xl border border-gray-200 bg-white/80 px-4 py-2.5 text-sm"
+              />
+            </div>
+
+            <div>
+              <label
+                data-i18n="contact.labelMessage"
+                class="block text-sm font-semibold text-gray-600 mb-1.5"
+                >内容</label
+              >
+              <textarea
+                name="message"
+                rows="5"
+                required
+                data-i18n-placeholder="contact.placeholderMessage"
+                placeholder="お問い合わせ内容をご記入ください"
+                class="form-field w-full rounded-xl border border-gray-200 bg-white/80 px-4 py-2.5 text-sm resize-none"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="btn-press w-full rounded-xl px-4 py-3 text-sm font-semibold text-white bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 shadow-md"
+            >
+              <span data-i18n="contact.submitBtn">送信する</span>
+            </button>
+          </form>
         </div>
+      </section>
 
-        <div>
-          <label data-i18n="contact.labelEmail" class="block text-sm font-semibold text-gray-600 mb-1.5">メールアドレス</label>
-          <input type="email" name="email" required
-                 data-i18n-placeholder="contact.placeholderEmail" placeholder="you@example.com"
-                 class="form-field w-full rounded-xl border border-gray-200 bg-white/80 px-4 py-2.5 text-sm">
-        </div>
-
-        <div>
-          <label data-i18n="contact.labelMessage" class="block text-sm font-semibold text-gray-600 mb-1.5">内容</label>
-          <textarea name="message" rows="5" required
-                    data-i18n-placeholder="contact.placeholderMessage" placeholder="お問い合わせ内容をご記入ください"
-                    class="form-field w-full rounded-xl border border-gray-200 bg-white/80 px-4 py-2.5 text-sm resize-none"></textarea>
-        </div>
-
-        <button type="submit"
-                class="btn-press w-full rounded-xl px-4 py-3 text-sm font-semibold text-white bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 shadow-md">
-          <span data-i18n="contact.submitBtn">送信する</span>
-        </button>
-      </form>
-    </div>
-  </section>
-
-  <!-- ===================== プライバシーポリシー（アコーディオン） =====================
+      <!-- ===================== プライバシーポリシー（アコーディオン） =====================
        各アプリカードの「プライバシーポリシーを見る」リンクは、myApps の privacyId と
        ここの <details id="..."> を突き合わせて該当セクションを自動的に開きます。 -->
-  <section id="privacy" class="max-w-4xl mx-auto px-4 sm:px-6 pb-20">
-    <h2 data-i18n="privacy.title" class="text-2xl font-bold text-gray-700 mb-6 text-center">プライバシーポリシー</h2>
+      <section id="privacy" class="max-w-4xl mx-auto px-4 sm:px-6 pb-20">
+        <h2
+          data-i18n="privacy.title"
+          class="text-2xl font-bold text-gray-700 mb-6 text-center"
+        >
+          プライバシーポリシー
+        </h2>
 
-    <div class="space-y-4">
-      <!-- Spotrans Lens 専用プライバシーポリシー -->
-      <details id="privacy-spotrans" class="glass-card rounded-2xl shadow-glass overflow-hidden">
-        <summary class="cursor-pointer px-6 py-4 flex items-center justify-between font-semibold text-gray-700">
-          <span data-i18n="privacy.spotransTitle">Spotrans Lens プライバシーポリシー</span>
-          <svg class="chev w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </summary>
-        <div data-i18n-html="privacy.spotransBody" class="px-6 pb-6 text-sm text-gray-600 leading-relaxed space-y-3">
-          <!-- JavaScriptにより言語ごとの本文が挿入されます -->
+        <div class="space-y-4">
+          <!-- Spotrans Lens 専用プライバシーポリシー -->
+          <details
+            id="privacy-spotrans"
+            class="glass-card rounded-2xl shadow-glass overflow-hidden"
+          >
+            <summary
+              class="cursor-pointer px-6 py-4 flex items-center justify-between font-semibold text-gray-700"
+            >
+              <span data-i18n="privacy.spotransTitle"
+                >Spotrans Lens プライバシーポリシー</span
+              >
+              <svg
+                class="chev w-4 h-4 text-gray-400"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M6 9l6 6 6-6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </summary>
+            <div
+              data-i18n-html="privacy.spotransBody"
+              class="px-6 pb-6 text-sm text-gray-600 leading-relaxed space-y-3"
+            >
+              <!-- JavaScriptにより言語ごとの本文が挿入されます -->
+            </div>
+          </details>
+
+          <!-- AirTouchPad 専用プライバシーポリシー -->
+          <details
+            id="privacy-airtouchpad"
+            class="glass-card rounded-2xl shadow-glass overflow-hidden"
+          >
+            <summary
+              class="cursor-pointer px-6 py-4 flex items-center justify-between font-semibold text-gray-700"
+            >
+              <span data-i18n="privacy.airtouchpadTitle"
+                >AirTouchPad プライバシーポリシー</span
+              >
+              <svg
+                class="chev w-4 h-4 text-gray-400"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M6 9l6 6 6-6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </summary>
+            <div
+              data-i18n-html="privacy.airtouchpadBody"
+              class="px-6 pb-6 text-sm text-gray-600 leading-relaxed space-y-3"
+            >
+              <!-- JavaScriptにより言語ごとの本文が挿入されます -->
+            </div>
+          </details>
+
+          <!-- その他アプリ共通プライバシーポリシー -->
+          <details
+            id="privacy-common"
+            class="glass-card rounded-2xl shadow-glass overflow-hidden"
+          >
+            <summary
+              class="cursor-pointer px-6 py-4 flex items-center justify-between font-semibold text-gray-700"
+            >
+              <span data-i18n="privacy.otherTitle"
+                >その他アプリ共通プライバシーポリシー</span
+              >
+              <svg
+                class="chev w-4 h-4 text-gray-400"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M6 9l6 6 6-6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </summary>
+            <div
+              data-i18n-html="privacy.otherBody"
+              class="px-6 pb-6 text-sm text-gray-600 leading-relaxed space-y-3"
+            >
+              <!-- JavaScriptにより言語ごとの本文が挿入されます -->
+            </div>
+          </details>
         </div>
-      </details>
+      </section>
+    </main>
 
-      <!-- AirTouchPad 専用プライバシーポリシー -->
-      <details id="privacy-airtouchpad" class="glass-card rounded-2xl shadow-glass overflow-hidden">
-        <summary class="cursor-pointer px-6 py-4 flex items-center justify-between font-semibold text-gray-700">
-          <span data-i18n="privacy.airtouchpadTitle">AirTouchPad プライバシーポリシー</span>
-          <svg class="chev w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </summary>
-        <div data-i18n-html="privacy.airtouchpadBody" class="px-6 pb-6 text-sm text-gray-600 leading-relaxed space-y-3">
-          <!-- JavaScriptにより言語ごとの本文が挿入されます -->
-        </div>
-      </details>
+    <footer class="text-center pb-10 text-xs text-gray-400">
+      <p data-i18n="footer.copyright">© 2026 setars. All rights reserved.</p>
+    </footer>
 
-      <!-- その他アプリ共通プライバシーポリシー -->
-      <details id="privacy-common" class="glass-card rounded-2xl shadow-glass overflow-hidden">
-        <summary class="cursor-pointer px-6 py-4 flex items-center justify-between font-semibold text-gray-700">
-          <span data-i18n="privacy.otherTitle">その他アプリ共通プライバシーポリシー</span>
-          <svg class="chev w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </summary>
-        <div data-i18n-html="privacy.otherBody" class="px-6 pb-6 text-sm text-gray-600 leading-relaxed space-y-3">
-          <!-- JavaScriptにより言語ごとの本文が挿入されます -->
-        </div>
-      </details>
-    </div>
-  </section>
+    <script>
+      // =====================================================================
+      // 自作アプリのデータ定義（グローバルスコープ）
+      // 新しいアプリを追加・変更する場合は、この配列を編集するだけで
+      // ショーケースのカードとお問い合わせフォームのプルダウンが自動的に同期更新されます。
+      // =====================================================================
+      const myApps = [
+        {
+          id: "spotrans",
+          nameJa: "Spotrans Lens",
+          nameEn: "Spotrans Lens",
+          taglineJa:
+            "画面を囲むだけで一瞬でコピペ＆翻訳が完結する翻訳レンズユーティリティ",
+          taglineEn:
+            "Instant screen capture, OCR, and overlay translation lens for Mac",
+          icon: "Assets/AppIcon.appiconset/icon_128x128.png", // ファイルが無い場合はCSSグラデーションのアイコンに自動フォールバックします
+          storeUrl: "#", // App Store公開後に実際のURLへ書き換えてください
+          privacyId: "privacy-spotrans",
+          isReleased: true,
+        },
+        {
+          id: "airtouchpad",
+          nameJa: "AirTouchPad",
+          nameEn: "AirTouchPad",
+          taglineJa:
+            "iPhoneをMacの完全ワイヤレスなトラックパッド＆キーボードに変える、ローカルネットワーク完結型のリモート操作アプリ",
+          taglineEn:
+            "Turn your iPhone into a fully wireless trackpad and keyboard for your Mac — remote control that never leaves your local network",
+          icon: "Assets/AppIcon.appiconset/AirTouchPadIcon.png", // ファイルが無い場合はCSSグラデーションのアイコンに自動フォールバックします
+          storeUrl: "#", // App Store公開後に実際のURLへ書き換えてください
+          privacyId: "privacy-airtouchpad",
+          isReleased: true,
+        },
+        {
+          id: "coming-soon",
+          nameJa: "次の名作アプリ",
+          nameEn: "Next Masterpiece",
+          taglineJa:
+            "Macライフをさらに便利にする画期的な新規ツール。近日公開予定！",
+          taglineEn:
+            "Another powerful utility tool under active development. Coming soon!",
+          icon: "https://via.placeholder.com/128?text=Coming+Soon",
+          storeUrl: "",
+          privacyId: "privacy-common",
+          isReleased: false, // falseの場合はカードに「Coming Soon」バッジを表示し、ダウンロードボタンを非表示にします
+        },
+      ];
 
-</main>
+      // アイコンがフォールバックした際に使うグラデーションパレット（配列の順番で自動的に割り当てられます）
+      const ICON_GRADIENTS = [
+        "linear-gradient(135deg, #f472b6 0%, #a78bfa 55%, #6366f1 100%)",
+        "linear-gradient(135deg, #34d399 0%, #22d3ee 60%, #6366f1 100%)",
+        "linear-gradient(135deg, #fbbf24 0%, #f472b6 60%, #a78bfa 100%)",
+        "linear-gradient(135deg, #60a5fa 0%, #818cf8 55%, #c084fc 100%)",
+      ];
 
-<footer class="text-center pb-10 text-xs text-gray-400">
-  <p data-i18n="footer.copyright">© 2026 setars. All rights reserved.</p>
-</footer>
+      (function () {
+        // ===================== 静的なUI文言の翻訳データ（アプリ固有情報は myApps 側で管理） =====================
+        var translations = {
+          ja: {
+            "meta.title": "setars | アプリポートフォリオ & サポート窓口",
+            "hero.title": "私たちが創るアプリの世界",
+            "hero.subtitle":
+              "美しく、使いやすいアプリケーション体験をお届けします。ご質問・ご要望はいつでもお気軽にお問い合わせください。",
+            "showcase.title": "アプリケーション一覧",
+            "common.downloadBtn": "App Storeでダウンロード",
+            "common.supportBtn": "お問い合わせ",
+            "common.comingSoon": "近日公開",
+            "common.viewPrivacy": "プライバシーポリシーを見る",
+            "contact.title": "お問い合わせ",
+            "contact.subtitle":
+              "バグ報告、機能のご要望、その他のご質問など、どんなことでもお気軽にご連絡ください。全て無料でサポートいたします。",
+            "contact.labelApp": "対象アプリ",
+            "contact.labelCategory": "お問い合わせ用件",
+            "contact.labelName": "お名前",
+            "contact.labelEmail": "メールアドレス",
+            "contact.labelMessage": "内容",
+            "contact.placeholderName": "山田 太郎",
+            "contact.placeholderEmail": "you@example.com",
+            "contact.placeholderMessage": "お問い合わせ内容をご記入ください",
+            "contact.submitBtn": "送信する",
+            "contact.optionCategoryBug": "バグ報告",
+            "contact.optionCategoryFeature": "機能要望",
+            "contact.optionCategoryOther": "その他一般",
+            "privacy.title": "プライバシーポリシー",
+            "privacy.spotransTitle": "Spotrans Lens プライバシーポリシー",
+            "privacy.spotransBody":
+              "<p><strong>1. 収集する情報</strong><br>Spotrans Lensは、翻訳機能の提供にあたりカメラ映像を処理しますが、映像および画像データは端末上または一時的な処理のみに使用され、当社サーバーに保存されません。アプリの利用状況（クラッシュログ、使用言語設定など）を匿名の統計情報として収集する場合があります。</p>" +
+              "<p><strong>2. 情報の利用目的</strong><br>収集した情報は、アプリの品質改善、不具合の修正、機能改善の検討のためにのみ利用します。</p>" +
+              "<p><strong>3. 第三者への提供</strong><br>翻訳処理のために外部の翻訳APIサービスを利用する場合がありますが、個人を特定できる情報を第三者に提供することはありません。</p>" +
+              "<p><strong>4. お問い合わせ</strong><br>本ポリシーに関するご質問は、このページ内のお問い合わせフォーム（対象アプリ：Spotrans Lens）よりご連絡ください。</p>" +
+              '<p class="text-gray-400 text-xs">※本文は一般的なプレースホルダーです。実際のデータ取得内容に応じて開発者ご自身で内容を更新してください。</p>',
+            "privacy.airtouchpadTitle": "AirTouchPad プライバシーポリシー",
+            "privacy.airtouchpadBody":
+              "<p><strong>収集する情報について</strong><br>AirTouchPad（以下「本アプリ」）は、iPhoneアプリとMac常駐サーバー間で、同一ローカルネットワーク（Wi-Fi）上のみを通じてマウス操作・キーボード入力の情報を送受信します。これらの操作内容は開発者のサーバーに送信・保存されることはなく、お使いのiPhoneとMacの間だけでやり取りされます。</p>" +
+              "<p><strong>第三者サービスについて</strong><br>本アプリは、以下の第三者サービスを利用しています。それぞれのサービスにおけるデータの取り扱いについては、各社のプライバシーポリシーをご確認ください。</p>" +
+              '<ul class="list-disc pl-5 space-y-1">' +
+              "<li><strong>Apple StoreKit</strong>：アプリ内課金（プレミアム機能の購入）の決済処理に使用します。決済情報はAppleが管理し、開発者はカード情報等を保持しません。</li>" +
+              "<li><strong>Google AdMob（Google Mobile Ads SDK）</strong>：無料版での広告表示、およびリワード動画広告の再生に使用します。広告配信のため、端末の広告識別子（IDFA）等が利用される場合があります。iOSの「トラッキングの許可」ダイアログでユーザーが許可した場合のみ、パーソナライズされた広告が配信されます。</li>" +
+              "</ul>" +
+              "<p><strong>お子様のプライバシー</strong><br>本アプリは13歳未満のお子様を主な対象としておらず、意図的にお子様の個人情報を収集することはありません。</p>" +
+              "<p><strong>プライバシーポリシーの変更</strong><br>本ポリシーの内容は、機能追加等に伴い予告なく変更される場合があります。変更後の内容は本ページに掲載した時点で効力を持つものとします。</p>" +
+              "<p><strong>お問い合わせ</strong><br>本ポリシーに関するお問い合わせは support@example.com までご連絡ください。</p>" +
+              '<p class="text-gray-400 text-xs">※上記のお問い合わせ先は仮のプレースホルダーです。公開前に実際の連絡先へ差し替えてください。</p>',
+            "privacy.otherTitle": "その他アプリ共通プライバシーポリシー",
+            "privacy.otherBody":
+              "<p>本ポリシーは、setarsが提供する、Spotrans Lens以外の全てのアプリケーションに共通して適用されます。</p>" +
+              "<p><strong>1. 収集する情報</strong><br>各アプリは、機能提供に必要な最小限の情報（設定内容、利用ログ、クラッシュレポート等）のみを収集します。個別のアプリで追加の情報収集を行う場合は、当該アプリ内または本ページにて別途明示します。</p>" +
+              "<p><strong>2. データの保管と削除</strong><br>収集した情報は適切なセキュリティ対策のもとで管理し、不要になったデータは合理的な期間内に削除します。</p>" +
+              "<p><strong>3. お問い合わせ</strong><br>各アプリに関するお問い合わせは、このページのお問い合わせフォームから「対象アプリ」を選択の上、ご連絡ください。</p>" +
+              '<p class="text-gray-400 text-xs">※本文は一般的なプレースホルダーです。新しいアプリを公開する際は、内容を実情に合わせて更新してください。</p>',
+            "footer.copyright": "© 2026 setars. All rights reserved.",
+          },
+          en: {
+            "meta.title": "setars | App Portfolio & Support Desk",
+            "hero.title": "The World of Apps We Build",
+            "hero.subtitle":
+              "We deliver beautiful, effortless app experiences. Feel free to reach out anytime with questions or requests.",
+            "showcase.title": "Our Applications",
+            "common.downloadBtn": "Download on the App Store",
+            "common.supportBtn": "Contact Support",
+            "common.comingSoon": "Coming Soon",
+            "common.viewPrivacy": "View Privacy Policy",
+            "contact.title": "Contact Us",
+            "contact.subtitle":
+              "Bug reports, feature requests, or general questions — feel free to reach out. Support is completely free.",
+            "contact.labelApp": "Select App",
+            "contact.labelCategory": "Category",
+            "contact.labelName": "Name",
+            "contact.labelEmail": "Email",
+            "contact.labelMessage": "Message",
+            "contact.placeholderName": "Jane Doe",
+            "contact.placeholderEmail": "you@example.com",
+            "contact.placeholderMessage": "Please describe your inquiry",
+            "contact.submitBtn": "Send",
+            "contact.optionCategoryBug": "Bug Report",
+            "contact.optionCategoryFeature": "Feature Request",
+            "contact.optionCategoryOther": "General Inquiry",
+            "privacy.title": "Privacy Policy",
+            "privacy.spotransTitle": "Spotrans Lens Privacy Policy",
+            "privacy.spotransBody":
+              "<p><strong>1. Information We Collect</strong><br>Spotrans Lens processes camera video to provide translation, but the video/image data is used only on-device or for temporary processing and is not stored on our servers. We may collect anonymous usage statistics (e.g., crash logs, language settings) to improve the app.</p>" +
+              "<p><strong>2. How We Use Information</strong><br>Collected information is used solely to improve app quality, fix bugs, and evaluate new features.</p>" +
+              "<p><strong>3. Third-Party Sharing</strong><br>We may use external translation APIs to perform translation, but we do not share personally identifiable information with third parties.</p>" +
+              '<p><strong>4. Contact</strong><br>For questions about this policy, please use the contact form on this page (select "Spotrans Lens" as the app).</p>' +
+              '<p class="text-gray-400 text-xs">Note: This is generic placeholder text. Please update it to reflect the app\'s actual data practices.</p>',
+            "privacy.airtouchpadTitle": "AirTouchPad Privacy Policy",
+            "privacy.airtouchpadBody":
+              '<p><strong>Information We Collect</strong><br>AirTouchPad ("the App") sends and receives mouse and keyboard input data between the iPhone app and a resident Mac server, exclusively over the same local network (Wi-Fi). This data is never transmitted to or stored on the developer\'s servers — it is exchanged only directly between your iPhone and Mac.</p>' +
+              "<p><strong>Third-Party Services</strong><br>This app uses the following third-party services. Please refer to each provider's own privacy policy for details on how they handle data.</p>" +
+              '<ul class="list-disc pl-5 space-y-1">' +
+              "<li><strong>Apple StoreKit</strong>: Used to process in-app purchase payments (premium feature purchases). Payment information is managed by Apple; the developer does not retain any card details.</li>" +
+              "<li><strong>Google AdMob (Google Mobile Ads SDK)</strong>: Used to display ads in the free version and to play rewarded video ads. The device's advertising identifier (IDFA) may be used for ad delivery. Personalized ads are served only if the user grants permission via iOS's App Tracking Transparency prompt.</li>" +
+              "</ul>" +
+              "<p><strong>Children's Privacy</strong><br>This app is not primarily directed at children under 13, and we do not knowingly collect personal information from children.</p>" +
+              "<p><strong>Changes to This Policy</strong><br>The contents of this policy may change without notice as features are added. Any changes take effect once posted on this page.</p>" +
+              "<p><strong>Contact</strong><br>For questions about this policy, please contact support@example.com.</p>" +
+              '<p class="text-gray-400 text-xs">Note: This contact address is a placeholder — please replace it with your actual contact address before release.</p>',
+            "privacy.otherTitle": "Common Privacy Policy for Other Apps",
+            "privacy.otherBody":
+              "<p>This policy applies to all applications published by setars other than Spotrans Lens.</p>" +
+              "<p><strong>1. Information We Collect</strong><br>Each app collects only the minimum information necessary to provide its features (settings, usage logs, crash reports, etc.). Any additional data collection specific to an app will be disclosed within that app or on this page.</p>" +
+              "<p><strong>2. Data Storage and Deletion</strong><br>Collected information is managed with appropriate security measures and deleted within a reasonable period once no longer needed.</p>" +
+              "<p><strong>3. Contact</strong><br>For inquiries about a specific app, please select that app in the contact form on this page.</p>" +
+              '<p class="text-gray-400 text-xs">Note: This is generic placeholder text. Please update it whenever a new app is released.</p>',
+            "footer.copyright": "© 2026 setars. All rights reserved.",
+          },
+        };
 
-<script>
-  // =====================================================================
-  // 自作アプリのデータ定義（グローバルスコープ）
-  // 新しいアプリを追加・変更する場合は、この配列を編集するだけで
-  // ショーケースのカードとお問い合わせフォームのプルダウンが自動的に同期更新されます。
-  // =====================================================================
-  const myApps = [
-    {
-      id: "spotrans",
-      nameJa: "Spotrans Lens",
-      nameEn: "Spotrans Lens",
-      taglineJa: "画面を囲むだけで一瞬でコピペ＆翻訳が完結する翻訳レンズユーティリティ",
-      taglineEn: "Instant screen capture, OCR, and overlay translation lens for Mac",
-      icon: "Assets/AppIcon.appiconset/icon_128x128.png", // ファイルが無い場合はCSSグラデーションのアイコンに自動フォールバックします
-      storeUrl: "#", // App Store公開後に実際のURLへ書き換えてください
-      privacyId: "privacy-spotrans",
-      isReleased: true,
-    },
-    {
-      id: "airtouchpad",
-      nameJa: "AirTouchPad",
-      nameEn: "AirTouchPad",
-      taglineJa: "iPhoneをMacの完全ワイヤレスなトラックパッド＆キーボードに変える、ローカルネットワーク完結型のリモート操作アプリ",
-      taglineEn: "Turn your iPhone into a fully wireless trackpad and keyboard for your Mac — remote control that never leaves your local network",
-      icon: "Assets/AppIcon.appiconset/AirTouchPadIcon.png", // ファイルが無い場合はCSSグラデーションのアイコンに自動フォールバックします
-      storeUrl: "#", // App Store公開後に実際のURLへ書き換えてください
-      privacyId: "privacy-airtouchpad",
-      isReleased: true,
-    },
-    {
-      id: "coming-soon",
-      nameJa: "次の名作アプリ",
-      nameEn: "Next Masterpiece",
-      taglineJa: "Macライフをさらに便利にする画期的な新規ツール。近日公開予定！",
-      taglineEn: "Another powerful utility tool under active development. Coming soon!",
-      icon: "https://via.placeholder.com/128?text=Coming+Soon",
-      storeUrl: "",
-      privacyId: "privacy-common",
-      isReleased: false, // falseの場合はカードに「Coming Soon」バッジを表示し、ダウンロードボタンを非表示にします
-    },
-  ];
+        var currentLang = "ja";
 
-  // アイコンがフォールバックした際に使うグラデーションパレット（配列の順番で自動的に割り当てられます）
-  const ICON_GRADIENTS = [
-    "linear-gradient(135deg, #f472b6 0%, #a78bfa 55%, #6366f1 100%)",
-    "linear-gradient(135deg, #34d399 0%, #22d3ee 60%, #6366f1 100%)",
-    "linear-gradient(135deg, #fbbf24 0%, #f472b6 60%, #a78bfa 100%)",
-    "linear-gradient(135deg, #60a5fa 0%, #818cf8 55%, #c084fc 100%)",
-  ];
+        // Apple公式バッジ画像は使用せず、独自デザインの簡易アイコンSVGを使い回します
+        var appleSvg =
+          '<svg width="16" height="16" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-19.5-24.4-44.4-38.7-76.5-42.4-31.9-3.7-63.3 11.8-85.6 11.8-22.4 0-56.8-11.4-88.5-11.8-46.6-.5-89.6 26.9-113.3 68.7-24.3 42.3-24.3 105.2-8.8 145.9 13.2 34.7 34 65.3 62.4 88 21.8 17.6 44.7 25.7 63.2 25.7 20 0 34.9-9.6 55.6-9.6 20.7 0 35 9.6 55.7 9.6 18.8 0 42-9 63.7-27.3 15.6-13.1 27-27 37.6-42.3-1.5-.8-64.5-24.7-64.5-91.3zM224.1 91.3c15.5-18.6 26-44.7 23.1-70.5-22.2 1.5-49 15.4-64.6 33.6-14.2 16.6-26.4 43-23.1 68.4 24.7 1.9 49.7-12.3 64.6-31.5z"/></svg>';
 
-  (function () {
-    // ===================== 静的なUI文言の翻訳データ（アプリ固有情報は myApps 側で管理） =====================
-    var translations = {
-      ja: {
-        "meta.title": "setars | アプリポートフォリオ & サポート窓口",
-        "hero.title": "私たちが創るアプリの世界",
-        "hero.subtitle": "美しく、使いやすいアプリケーション体験をお届けします。ご質問・ご要望はいつでもお気軽にお問い合わせください。",
-        "showcase.title": "アプリケーション一覧",
-        "common.downloadBtn": "App Storeでダウンロード",
-        "common.supportBtn": "お問い合わせ",
-        "common.comingSoon": "近日公開",
-        "common.viewPrivacy": "プライバシーポリシーを見る",
-        "contact.title": "お問い合わせ",
-        "contact.subtitle": "バグ報告、機能のご要望、その他のご質問など、どんなことでもお気軽にご連絡ください。全て無料でサポートいたします。",
-        "contact.labelApp": "対象アプリ",
-        "contact.labelCategory": "お問い合わせ用件",
-        "contact.labelName": "お名前",
-        "contact.labelEmail": "メールアドレス",
-        "contact.labelMessage": "内容",
-        "contact.placeholderName": "山田 太郎",
-        "contact.placeholderEmail": "you@example.com",
-        "contact.placeholderMessage": "お問い合わせ内容をご記入ください",
-        "contact.submitBtn": "送信する",
-        "contact.optionCategoryBug": "バグ報告",
-        "contact.optionCategoryFeature": "機能要望",
-        "contact.optionCategoryOther": "その他一般",
-        "privacy.title": "プライバシーポリシー",
-        "privacy.spotransTitle": "Spotrans Lens プライバシーポリシー",
-        "privacy.spotransBody":
-          "<p><strong>1. 収集する情報</strong><br>Spotrans Lensは、翻訳機能の提供にあたりカメラ映像を処理しますが、映像および画像データは端末上または一時的な処理のみに使用され、当社サーバーに保存されません。アプリの利用状況（クラッシュログ、使用言語設定など）を匿名の統計情報として収集する場合があります。</p>" +
-          "<p><strong>2. 情報の利用目的</strong><br>収集した情報は、アプリの品質改善、不具合の修正、機能改善の検討のためにのみ利用します。</p>" +
-          "<p><strong>3. 第三者への提供</strong><br>翻訳処理のために外部の翻訳APIサービスを利用する場合がありますが、個人を特定できる情報を第三者に提供することはありません。</p>" +
-          "<p><strong>4. お問い合わせ</strong><br>本ポリシーに関するご質問は、このページ内のお問い合わせフォーム（対象アプリ：Spotrans Lens）よりご連絡ください。</p>" +
-          "<p class=\"text-gray-400 text-xs\">※本文は一般的なプレースホルダーです。実際のデータ取得内容に応じて開発者ご自身で内容を更新してください。</p>",
-        "privacy.airtouchpadTitle": "AirTouchPad プライバシーポリシー",
-        "privacy.airtouchpadBody":
-          "<p><strong>収集する情報について</strong><br>AirTouchPad（以下「本アプリ」）は、iPhoneアプリとMac常駐サーバー間で、同一ローカルネットワーク（Wi-Fi）上のみを通じてマウス操作・キーボード入力の情報を送受信します。これらの操作内容は開発者のサーバーに送信・保存されることはなく、お使いのiPhoneとMacの間だけでやり取りされます。</p>" +
-          "<p><strong>第三者サービスについて</strong><br>本アプリは、以下の第三者サービスを利用しています。それぞれのサービスにおけるデータの取り扱いについては、各社のプライバシーポリシーをご確認ください。</p>" +
-          "<ul class=\"list-disc pl-5 space-y-1\">" +
-          "<li><strong>Apple StoreKit</strong>：アプリ内課金（プレミアム機能の購入）の決済処理に使用します。決済情報はAppleが管理し、開発者はカード情報等を保持しません。</li>" +
-          "<li><strong>Google AdMob（Google Mobile Ads SDK）</strong>：無料版での広告表示、およびリワード動画広告の再生に使用します。広告配信のため、端末の広告識別子（IDFA）等が利用される場合があります。iOSの「トラッキングの許可」ダイアログでユーザーが許可した場合のみ、パーソナライズされた広告が配信されます。</li>" +
-          "</ul>" +
-          "<p><strong>お子様のプライバシー</strong><br>本アプリは13歳未満のお子様を主な対象としておらず、意図的にお子様の個人情報を収集することはありません。</p>" +
-          "<p><strong>プライバシーポリシーの変更</strong><br>本ポリシーの内容は、機能追加等に伴い予告なく変更される場合があります。変更後の内容は本ページに掲載した時点で効力を持つものとします。</p>" +
-          "<p><strong>お問い合わせ</strong><br>本ポリシーに関するお問い合わせは support@example.com までご連絡ください。</p>" +
-          "<p class=\"text-gray-400 text-xs\">※上記のお問い合わせ先は仮のプレースホルダーです。公開前に実際の連絡先へ差し替えてください。</p>",
-        "privacy.otherTitle": "その他アプリ共通プライバシーポリシー",
-        "privacy.otherBody":
-          "<p>本ポリシーは、setarsが提供する、Spotrans Lens以外の全てのアプリケーションに共通して適用されます。</p>" +
-          "<p><strong>1. 収集する情報</strong><br>各アプリは、機能提供に必要な最小限の情報（設定内容、利用ログ、クラッシュレポート等）のみを収集します。個別のアプリで追加の情報収集を行う場合は、当該アプリ内または本ページにて別途明示します。</p>" +
-          "<p><strong>2. データの保管と削除</strong><br>収集した情報は適切なセキュリティ対策のもとで管理し、不要になったデータは合理的な期間内に削除します。</p>" +
-          "<p><strong>3. お問い合わせ</strong><br>各アプリに関するお問い合わせは、このページのお問い合わせフォームから「対象アプリ」を選択の上、ご連絡ください。</p>" +
-          "<p class=\"text-gray-400 text-xs\">※本文は一般的なプレースホルダーです。新しいアプリを公開する際は、内容を実情に合わせて更新してください。</p>",
-        "footer.copyright": "© 2026 setars. All rights reserved.",
-      },
-      en: {
-        "meta.title": "setars | App Portfolio & Support Desk",
-        "hero.title": "The World of Apps We Build",
-        "hero.subtitle": "We deliver beautiful, effortless app experiences. Feel free to reach out anytime with questions or requests.",
-        "showcase.title": "Our Applications",
-        "common.downloadBtn": "Download on the App Store",
-        "common.supportBtn": "Contact Support",
-        "common.comingSoon": "Coming Soon",
-        "common.viewPrivacy": "View Privacy Policy",
-        "contact.title": "Contact Us",
-        "contact.subtitle": "Bug reports, feature requests, or general questions — feel free to reach out. Support is completely free.",
-        "contact.labelApp": "Select App",
-        "contact.labelCategory": "Category",
-        "contact.labelName": "Name",
-        "contact.labelEmail": "Email",
-        "contact.labelMessage": "Message",
-        "contact.placeholderName": "Jane Doe",
-        "contact.placeholderEmail": "you@example.com",
-        "contact.placeholderMessage": "Please describe your inquiry",
-        "contact.submitBtn": "Send",
-        "contact.optionCategoryBug": "Bug Report",
-        "contact.optionCategoryFeature": "Feature Request",
-        "contact.optionCategoryOther": "General Inquiry",
-        "privacy.title": "Privacy Policy",
-        "privacy.spotransTitle": "Spotrans Lens Privacy Policy",
-        "privacy.spotransBody":
-          "<p><strong>1. Information We Collect</strong><br>Spotrans Lens processes camera video to provide translation, but the video/image data is used only on-device or for temporary processing and is not stored on our servers. We may collect anonymous usage statistics (e.g., crash logs, language settings) to improve the app.</p>" +
-          "<p><strong>2. How We Use Information</strong><br>Collected information is used solely to improve app quality, fix bugs, and evaluate new features.</p>" +
-          "<p><strong>3. Third-Party Sharing</strong><br>We may use external translation APIs to perform translation, but we do not share personally identifiable information with third parties.</p>" +
-          "<p><strong>4. Contact</strong><br>For questions about this policy, please use the contact form on this page (select \"Spotrans Lens\" as the app).</p>" +
-          "<p class=\"text-gray-400 text-xs\">Note: This is generic placeholder text. Please update it to reflect the app's actual data practices.</p>",
-        "privacy.airtouchpadTitle": "AirTouchPad Privacy Policy",
-        "privacy.airtouchpadBody":
-          "<p><strong>Information We Collect</strong><br>AirTouchPad (\"the App\") sends and receives mouse and keyboard input data between the iPhone app and a resident Mac server, exclusively over the same local network (Wi-Fi). This data is never transmitted to or stored on the developer's servers — it is exchanged only directly between your iPhone and Mac.</p>" +
-          "<p><strong>Third-Party Services</strong><br>This app uses the following third-party services. Please refer to each provider's own privacy policy for details on how they handle data.</p>" +
-          "<ul class=\"list-disc pl-5 space-y-1\">" +
-          "<li><strong>Apple StoreKit</strong>: Used to process in-app purchase payments (premium feature purchases). Payment information is managed by Apple; the developer does not retain any card details.</li>" +
-          "<li><strong>Google AdMob (Google Mobile Ads SDK)</strong>: Used to display ads in the free version and to play rewarded video ads. The device's advertising identifier (IDFA) may be used for ad delivery. Personalized ads are served only if the user grants permission via iOS's App Tracking Transparency prompt.</li>" +
-          "</ul>" +
-          "<p><strong>Children's Privacy</strong><br>This app is not primarily directed at children under 13, and we do not knowingly collect personal information from children.</p>" +
-          "<p><strong>Changes to This Policy</strong><br>The contents of this policy may change without notice as features are added. Any changes take effect once posted on this page.</p>" +
-          "<p><strong>Contact</strong><br>For questions about this policy, please contact support@example.com.</p>" +
-          "<p class=\"text-gray-400 text-xs\">Note: This contact address is a placeholder — please replace it with your actual contact address before release.</p>",
-        "privacy.otherTitle": "Common Privacy Policy for Other Apps",
-        "privacy.otherBody":
-          "<p>This policy applies to all applications published by setars other than Spotrans Lens.</p>" +
-          "<p><strong>1. Information We Collect</strong><br>Each app collects only the minimum information necessary to provide its features (settings, usage logs, crash reports, etc.). Any additional data collection specific to an app will be disclosed within that app or on this page.</p>" +
-          "<p><strong>2. Data Storage and Deletion</strong><br>Collected information is managed with appropriate security measures and deleted within a reasonable period once no longer needed.</p>" +
-          "<p><strong>3. Contact</strong><br>For inquiries about a specific app, please select that app in the contact form on this page.</p>" +
-          "<p class=\"text-gray-400 text-xs\">Note: This is generic placeholder text. Please update it whenever a new app is released.</p>",
-        "footer.copyright": "© 2026 setars. All rights reserved.",
-      },
-    };
+        // ===================== HTMLエスケープ（myAppsが将来外部データ化されても安全なように） =====================
+        function escapeHtml(value) {
+          return String(value).replace(/[&<>"']/g, function (ch) {
+            return {
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[ch];
+          });
+        }
 
-    var currentLang = "ja";
+        function getAppName(app, lang) {
+          return lang === "ja" ? app.nameJa : app.nameEn;
+        }
+        function getAppTagline(app, lang) {
+          return lang === "ja" ? app.taglineJa : app.taglineEn;
+        }
 
-    // Apple公式バッジ画像は使用せず、独自デザインの簡易アイコンSVGを使い回します
-    var appleSvg =
-      '<svg width="16" height="16" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-19.5-24.4-44.4-38.7-76.5-42.4-31.9-3.7-63.3 11.8-85.6 11.8-22.4 0-56.8-11.4-88.5-11.8-46.6-.5-89.6 26.9-113.3 68.7-24.3 42.3-24.3 105.2-8.8 145.9 13.2 34.7 34 65.3 62.4 88 21.8 17.6 44.7 25.7 63.2 25.7 20 0 34.9-9.6 55.6-9.6 20.7 0 35 9.6 55.7 9.6 18.8 0 42-9 63.7-27.3 15.6-13.1 27-27 37.6-42.3-1.5-.8-64.5-24.7-64.5-91.3zM224.1 91.3c15.5-18.6 26-44.7 23.1-70.5-22.2 1.5-49 15.4-64.6 33.6-14.2 16.6-26.4 43-23.1 68.4 24.7 1.9 49.7-12.3 64.6-31.5z"/></svg>';
+        // ===================== myApps からショーケースカードを自動生成 =====================
+        function renderShowcase(lang) {
+          var grid = document.getElementById("showcase-grid");
+          var t = translations[lang];
 
-    // ===================== HTMLエスケープ（myAppsが将来外部データ化されても安全なように） =====================
-    function escapeHtml(value) {
-      return String(value).replace(/[&<>"']/g, function (ch) {
-        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch];
-      });
-    }
+          grid.innerHTML = myApps
+            .map(function (app, index) {
+              var name = escapeHtml(getAppName(app, lang));
+              var tagline = escapeHtml(getAppTagline(app, lang));
+              var letter = escapeHtml(
+                getAppName(app, lang).charAt(0).toUpperCase() || "?",
+              );
+              var gradient = ICON_GRADIENTS[index % ICON_GRADIENTS.length];
+              var iconClass = app.isReleased ? "" : "grayscale opacity-70";
 
-    function getAppName(app, lang) {
-      return lang === "ja" ? app.nameJa : app.nameEn;
-    }
-    function getAppTagline(app, lang) {
-      return lang === "ja" ? app.taglineJa : app.taglineEn;
-    }
+              var ribbonHtml = app.isReleased
+                ? ""
+                : '<div class="ribbon">' +
+                  escapeHtml(t["common.comingSoon"]) +
+                  "</div>";
 
-    // ===================== myApps からショーケースカードを自動生成 =====================
-    function renderShowcase(lang) {
-      var grid = document.getElementById("showcase-grid");
-      var t = translations[lang];
+              var actionHtml = app.isReleased
+                ? '<a href="' +
+                  escapeHtml(app.storeUrl || "#") +
+                  '" target="_blank" rel="noopener" ' +
+                  'class="appstore-btn btn-press flex-1 flex items-center justify-center gap-2 text-white rounded-xl px-4 py-2.5 text-sm font-semibold shadow-md">' +
+                  appleSvg +
+                  "<span>" +
+                  escapeHtml(t["common.downloadBtn"]) +
+                  "</span></a>"
+                : '<div class="flex-1 flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold border border-gray-200 text-gray-400 bg-gray-50">' +
+                  escapeHtml(t["common.comingSoon"]) +
+                  "</div>";
 
-      grid.innerHTML = myApps
-        .map(function (app, index) {
-          var name = escapeHtml(getAppName(app, lang));
-          var tagline = escapeHtml(getAppTagline(app, lang));
-          var letter = escapeHtml(getAppName(app, lang).charAt(0).toUpperCase() || "?");
-          var gradient = ICON_GRADIENTS[index % ICON_GRADIENTS.length];
-          var iconClass = app.isReleased ? "" : "grayscale opacity-70";
-
-          var ribbonHtml = app.isReleased
-            ? ""
-            : '<div class="ribbon">' + escapeHtml(t["common.comingSoon"]) + "</div>";
-
-          var actionHtml = app.isReleased
-            ? '<a href="' + escapeHtml(app.storeUrl || "#") + '" target="_blank" rel="noopener" ' +
-              'class="appstore-btn btn-press flex-1 flex items-center justify-center gap-2 text-white rounded-xl px-4 py-2.5 text-sm font-semibold shadow-md">' +
-              appleSvg + "<span>" + escapeHtml(t["common.downloadBtn"]) + "</span></a>"
-            : '<div class="flex-1 flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold border border-gray-200 text-gray-400 bg-gray-50">' +
-              escapeHtml(t["common.comingSoon"]) + "</div>";
-
-          return (
-            '<div class="relative overflow-hidden glass-strong hover-lift rounded-3xl shadow-glass p-6 sm:p-8 flex flex-col" data-app-card="' + escapeHtml(app.id) + '">' +
-              ribbonHtml +
-              '<div class="flex items-start gap-4 mb-5">' +
-                '<div class="app-icon-wrap ' + iconClass + '" style="background:' + gradient + '">' +
-                  '<span class="app-icon-fallback-letter">' + letter + "</span>" +
-                  '<img src="' + escapeHtml(app.icon) + '" alt="' + name + '" class="app-icon-img" onerror="this.style.display=\'none\'">' +
+              return (
+                '<div class="relative overflow-hidden glass-strong hover-lift rounded-3xl shadow-glass p-6 sm:p-8 flex flex-col" data-app-card="' +
+                escapeHtml(app.id) +
+                '">' +
+                ribbonHtml +
+                '<div class="flex items-start gap-4 mb-5">' +
+                '<div class="app-icon-wrap ' +
+                iconClass +
+                '" style="background:' +
+                gradient +
+                '">' +
+                '<span class="app-icon-fallback-letter">' +
+                letter +
+                "</span>" +
+                '<img src="' +
+                escapeHtml(app.icon) +
+                '" alt="' +
+                name +
+                '" class="app-icon-img" onerror="this.style.display=\'none\'">' +
                 "</div>" +
                 '<div class="flex-1">' +
-                  '<h3 class="text-xl font-bold text-gray-800">' + name + "</h3>" +
+                '<h3 class="text-xl font-bold text-gray-800">' +
+                name +
+                "</h3>" +
                 "</div>" +
-              "</div>" +
-              '<p class="text-gray-600 leading-relaxed mb-6 flex-1">' + tagline + "</p>" +
-              '<div class="flex flex-col sm:flex-row gap-3 mb-3">' +
+                "</div>" +
+                '<p class="text-gray-600 leading-relaxed mb-6 flex-1">' +
+                tagline +
+                "</p>" +
+                '<div class="flex flex-col sm:flex-row gap-3 mb-3">' +
                 actionHtml +
-                '<button type="button" data-support-app="' + escapeHtml(app.id) + '" ' +
-                  'class="btn-press flex-1 rounded-xl px-4 py-2.5 text-sm font-semibold border border-indigo-300 text-indigo-600 bg-white/70 hover:bg-indigo-50">' +
-                  escapeHtml(t["common.supportBtn"]) +
+                '<button type="button" data-support-app="' +
+                escapeHtml(app.id) +
+                '" ' +
+                'class="btn-press flex-1 rounded-xl px-4 py-2.5 text-sm font-semibold border border-indigo-300 text-indigo-600 bg-white/70 hover:bg-indigo-50">' +
+                escapeHtml(t["common.supportBtn"]) +
                 "</button>" +
-              "</div>" +
-              '<button type="button" data-privacy-link="' + escapeHtml(app.privacyId) + '" ' +
+                "</div>" +
+                '<button type="button" data-privacy-link="' +
+                escapeHtml(app.privacyId) +
+                '" ' +
                 'class="text-xs text-gray-400 hover:text-indigo-500 underline self-start">' +
                 escapeHtml(t["common.viewPrivacy"]) +
-              "</button>" +
-            "</div>"
-          );
-        })
-        .join("");
-    }
-
-    // ===================== myApps からお問い合わせフォームの選択肢を自動生成 =====================
-    function renderAppOptions(lang) {
-      var select = document.getElementById("app-select");
-      var previousValue = select.value;
-
-      select.innerHTML = myApps
-        .map(function (app) {
-          return '<option value="' + escapeHtml(app.id) + '">' + escapeHtml(getAppName(app, lang)) + "</option>";
-        })
-        .join("");
-
-      if (myApps.some(function (app) { return app.id === previousValue; })) {
-        select.value = previousValue;
-      }
-    }
-
-    // ===================== 言語適用 =====================
-    function applyLanguage(lang) {
-      if (!translations[lang]) return;
-      currentLang = lang;
-      document.getElementById("html-root").setAttribute("lang", lang);
-
-      // 通常テキストの差し替え
-      document.querySelectorAll("[data-i18n]").forEach(function (el) {
-        var key = el.getAttribute("data-i18n");
-        if (translations[lang][key] !== undefined) {
-          el.textContent = translations[lang][key];
+                "</button>" +
+                "</div>"
+              );
+            })
+            .join("");
         }
-      });
 
-      // HTML本文（プライバシーポリシー等）の差し替え
-      document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
-        var key = el.getAttribute("data-i18n-html");
-        if (translations[lang][key] !== undefined) {
-          el.innerHTML = translations[lang][key];
+        // ===================== myApps からお問い合わせフォームの選択肢を自動生成 =====================
+        function renderAppOptions(lang) {
+          var select = document.getElementById("app-select");
+          var previousValue = select.value;
+
+          select.innerHTML = myApps
+            .map(function (app) {
+              return (
+                '<option value="' +
+                escapeHtml(app.id) +
+                '">' +
+                escapeHtml(getAppName(app, lang)) +
+                "</option>"
+              );
+            })
+            .join("");
+
+          if (
+            myApps.some(function (app) {
+              return app.id === previousValue;
+            })
+          ) {
+            select.value = previousValue;
+          }
         }
-      });
 
-      // placeholder属性の差し替え
-      document.querySelectorAll("[data-i18n-placeholder]").forEach(function (el) {
-        var key = el.getAttribute("data-i18n-placeholder");
-        if (translations[lang][key] !== undefined) {
-          el.setAttribute("placeholder", translations[lang][key]);
+        // ===================== 言語適用 =====================
+        function applyLanguage(lang) {
+          if (!translations[lang]) return;
+          currentLang = lang;
+          document.getElementById("html-root").setAttribute("lang", lang);
+
+          // 通常テキストの差し替え
+          document.querySelectorAll("[data-i18n]").forEach(function (el) {
+            var key = el.getAttribute("data-i18n");
+            if (translations[lang][key] !== undefined) {
+              el.textContent = translations[lang][key];
+            }
+          });
+
+          // HTML本文（プライバシーポリシー等）の差し替え
+          document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
+            var key = el.getAttribute("data-i18n-html");
+            if (translations[lang][key] !== undefined) {
+              el.innerHTML = translations[lang][key];
+            }
+          });
+
+          // placeholder属性の差し替え
+          document
+            .querySelectorAll("[data-i18n-placeholder]")
+            .forEach(function (el) {
+              var key = el.getAttribute("data-i18n-placeholder");
+              if (translations[lang][key] !== undefined) {
+                el.setAttribute("placeholder", translations[lang][key]);
+              }
+            });
+
+          // トグルボタンのアクティブ状態を更新
+          document.querySelectorAll(".lang-toggle-btn").forEach(function (btn) {
+            btn.classList.toggle(
+              "active",
+              btn.getAttribute("data-lang") === lang,
+            );
+          });
+
+          document.title = translations[lang]["meta.title"];
+
+          // アプリ配列に依存する箇所（ショーケース／フォームの選択肢）を再生成
+          renderShowcase(lang);
+          renderAppOptions(lang);
         }
-      });
 
-      // トグルボタンのアクティブ状態を更新
-      document.querySelectorAll(".lang-toggle-btn").forEach(function (btn) {
-        btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
-      });
-
-      document.title = translations[lang]["meta.title"];
-
-      // アプリ配列に依存する箇所（ショーケース／フォームの選択肢）を再生成
-      renderShowcase(lang);
-      renderAppOptions(lang);
-    }
-
-    // ===================== 初期言語の自動判定 =====================
-    function detectInitialLanguage() {
-      var nav = (navigator.language || navigator.userLanguage || "en").toLowerCase();
-      return nav.indexOf("ja") === 0 ? "ja" : "en";
-    }
-
-    // ===================== 言語トグルのイベント =====================
-    document.querySelectorAll(".lang-toggle-btn").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        applyLanguage(btn.getAttribute("data-lang"));
-      });
-    });
-
-    applyLanguage(detectInitialLanguage());
-
-    // ===================== ショーケース内のボタンをイベントデリゲーションで処理 =====================
-    // （renderShowcaseで再生成されても、都度バインドし直す必要がないようにするため）
-    document.getElementById("showcase-grid").addEventListener("click", function (e) {
-      var supportBtn = e.target.closest("[data-support-app]");
-      if (supportBtn) {
-        var appId = supportBtn.getAttribute("data-support-app");
-        var appSelect = document.getElementById("app-select");
-        if (appSelect) {
-          appSelect.value = appId;
+        // ===================== 初期言語の自動判定 =====================
+        function detectInitialLanguage() {
+          var nav = (
+            navigator.language ||
+            navigator.userLanguage ||
+            "en"
+          ).toLowerCase();
+          return nav.indexOf("ja") === 0 ? "ja" : "en";
         }
-        document.getElementById("contact").scrollIntoView({ behavior: "smooth", block: "start" });
-        var nameField = document.getElementById("name-field");
-        if (nameField) {
-          setTimeout(function () { nameField.focus(); }, 500);
-        }
-        return;
-      }
 
-      var privacyBtn = e.target.closest("[data-privacy-link]");
-      if (privacyBtn) {
-        var targetId = privacyBtn.getAttribute("data-privacy-link");
-        var targetDetails = document.getElementById(targetId);
-        if (targetDetails) {
-          targetDetails.setAttribute("open", "");
-          targetDetails.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }
-    });
+        // ===================== 言語トグルのイベント =====================
+        document.querySelectorAll(".lang-toggle-btn").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            applyLanguage(btn.getAttribute("data-lang"));
+          });
+        });
 
-    // ===================== 送信直前に件名（_subject）を動的生成 =====================
-    var form = document.getElementById("contact-form");
-    form.addEventListener("submit", function () {
-      var appId = document.getElementById("app-select").value;
-      var app = myApps.find(function (a) { return a.id === appId; });
-      var appLabel = app ? app.nameEn : appId;
-      var categoryValue = document.getElementById("category-select").value;
-      var nameValue = document.getElementById("name-field").value || "名無し";
-      var subject = "[" + appLabel + " - " + categoryValue + "] " + nameValue + "様より";
-      document.getElementById("subject-field").value = subject;
-    });
-  })();
-</script>
+        applyLanguage(detectInitialLanguage());
 
-</body>
+        // ===================== ショーケース内のボタンをイベントデリゲーションで処理 =====================
+        // （renderShowcaseで再生成されても、都度バインドし直す必要がないようにするため）
+        document
+          .getElementById("showcase-grid")
+          .addEventListener("click", function (e) {
+            var supportBtn = e.target.closest("[data-support-app]");
+            if (supportBtn) {
+              var appId = supportBtn.getAttribute("data-support-app");
+              var appSelect = document.getElementById("app-select");
+              if (appSelect) {
+                appSelect.value = appId;
+              }
+              document
+                .getElementById("contact")
+                .scrollIntoView({ behavior: "smooth", block: "start" });
+              var nameField = document.getElementById("name-field");
+              if (nameField) {
+                setTimeout(function () {
+                  nameField.focus();
+                }, 500);
+              }
+              return;
+            }
+
+            var privacyBtn = e.target.closest("[data-privacy-link]");
+            if (privacyBtn) {
+              var targetId = privacyBtn.getAttribute("data-privacy-link");
+              var targetDetails = document.getElementById(targetId);
+              if (targetDetails) {
+                targetDetails.setAttribute("open", "");
+                targetDetails.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            }
+          });
+
+        // ===================== 送信直前に件名（_subject）を動的生成 =====================
+        var form = document.getElementById("contact-form");
+        form.addEventListener("submit", function () {
+          var appId = document.getElementById("app-select").value;
+          var app = myApps.find(function (a) {
+            return a.id === appId;
+          });
+          var appLabel = app ? app.nameEn : appId;
+          var categoryValue = document.getElementById("category-select").value;
+          var nameValue =
+            document.getElementById("name-field").value || "名無し";
+          var subject =
+            "[" +
+            appLabel +
+            " - " +
+            categoryValue +
+            "] " +
+            nameValue +
+            "様より";
+          document.getElementById("subject-field").value = subject;
+        });
+      })();
+    </script>
+  </body>
 </html>
