@@ -176,7 +176,16 @@
             <div
               class="w-8 h-8 rounded-xl bg-gradient-to-br from-pink-400 via-purple-400 to-indigo-500 shadow-md"
             ></div>
-            <span class="font-bold text-gray-700 tracking-tight">setars</span>
+            <div class="leading-tight">
+              <div class="font-bold text-gray-700 tracking-tight">setars</div>
+              <div
+                class="hidden sm:block text-[10px] text-gray-400 tracking-wide"
+                title="Simple Effective Tools for Automation, Remote-control & Support"
+              >
+                S.E.T.A.R.S. — Simple Effective Tools for Automation,
+                Remote-control &amp; Support
+              </div>
+            </div>
           </div>
 
           <!-- 言語切替：日本語 / English -->
@@ -206,6 +215,12 @@
     <main>
       <!-- ===================== ヒーローセクション ===================== -->
       <section class="text-center pt-16 sm:pt-20 pb-12 px-4">
+        <p
+          data-i18n="hero.tagline"
+          class="text-sm sm:text-base font-semibold tracking-wide bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent mb-3"
+        >
+          さりげなく、役に立つ。
+        </p>
         <h1
           data-i18n="hero.title"
           class="text-3xl sm:text-5xl font-extrabold tracking-tight text-gray-800 mb-4"
@@ -490,6 +505,7 @@
     </main>
 
     <footer class="text-center pb-10 text-xs text-gray-400">
+      <p data-i18n="hero.tagline" class="mb-1">さりげなく、役に立つ。</p>
       <p data-i18n="footer.copyright">© 2026 setars. All rights reserved.</p>
     </footer>
 
@@ -554,7 +570,8 @@
         var translations = {
           ja: {
             "meta.title": "setars | アプリポートフォリオ & サポート窓口",
-            "hero.title": "私たちが創るアプリの世界",
+            "hero.tagline": "さりげなく、役に立つ。",
+            "hero.title": "私たちが創ったアプリ",
             "hero.subtitle":
               "美しく、使いやすいアプリケーション体験をお届けします。ご質問・ご要望はいつでもお気軽にお問い合わせください。",
             "showcase.title": "アプリケーション一覧",
@@ -608,7 +625,8 @@
           },
           en: {
             "meta.title": "setars | App Portfolio & Support Desk",
-            "hero.title": "The World of Apps We Build",
+            "hero.tagline": "Quietly useful, every day.",
+            "hero.title": "Apps We've Built",
             "hero.subtitle":
               "We deliver beautiful, effortless app experiences. Feel free to reach out anytime with questions or requests.",
             "showcase.title": "Our Applications",
