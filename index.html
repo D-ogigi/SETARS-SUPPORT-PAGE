@@ -495,6 +495,39 @@
             </div>
           </details>
 
+          <!-- Pitatrim 専用プライバシーポリシー -->
+          <details
+            id="privacy-pitatrim"
+            class="glass-card rounded-2xl shadow-glass overflow-hidden"
+          >
+            <summary
+              class="cursor-pointer px-6 py-4 flex items-center justify-between font-semibold text-gray-700"
+            >
+              <span data-i18n="privacy.pitatrimTitle"
+                >Pitatrim プライバシーポリシー</span
+              >
+              <svg
+                class="chev w-4 h-4 text-gray-400"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M6 9l6 6 6-6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </summary>
+            <div
+              data-i18n-html="privacy.pitatrimBody"
+              class="px-6 pb-6 text-sm text-gray-600 leading-relaxed space-y-3"
+            >
+              <!-- JavaScriptにより言語ごとの本文が挿入されます -->
+            </div>
+          </details>
+
           <!-- その他アプリ共通プライバシーポリシー -->
           <details
             id="privacy-common"
@@ -628,7 +661,7 @@
             "Snap-crop your photos and documents and turn them into beautifully clean PDFs",
           icon: "Assets/AppIcon.appiconset/PitatrimIcon.png", // ファイルが無い場合は単色アイコンに自動フォールバックします
           storeUrl: "#", // App Store公開後に実際のURLへ書き換えてください
-          privacyId: "privacy-common",
+          privacyId: "privacy-pitatrim",
           isReleased: false, // App Store公開が確定したら true に変更してください
         },
         {
@@ -700,6 +733,13 @@
               "<p><strong>プライバシーポリシーの変更</strong><br>本ポリシーの内容は、機能追加等に伴い予告なく変更される場合があります。変更後の内容は本ページに掲載した時点で効力を持つものとします。</p>" +
               "<p><strong>お問い合わせ</strong><br>本ポリシーに関するお問い合わせは support@example.com までご連絡ください。</p>" +
               '<p class="text-gray-400 text-xs">※上記のお問い合わせ先は仮のプレースホルダーです。公開前に実際の連絡先へ差し替えてください。</p>',
+            "privacy.pitatrimTitle": "Pitatrim プライバシーポリシー",
+            "privacy.pitatrimBody":
+              "<p><strong>1. 収集する情報</strong><br>Pitatrim（以下「本アプリ」）は、写真・書類のトリミングおよびPDF変換の処理をすべて端末内で完結しており、選択した画像データが外部サーバーに送信されることはありません。アプリの利用状況（クラッシュログ等）を匿名の統計情報として収集する場合があります。</p>" +
+              "<p><strong>2. 第三者サービスについて</strong><br>本アプリは、広告・アプリ内課金・解析などの第三者SDKを使用していません。</p>" +
+              "<p><strong>3. お子様のプライバシー</strong><br>本アプリは13歳未満のお子様を主な対象としておらず、意図的にお子様の個人情報を収集することはありません。</p>" +
+              "<p><strong>4. プライバシーポリシーの変更</strong><br>本ポリシーの内容は、機能追加等に伴い予告なく変更される場合があります。変更後の内容は本ページに掲載した時点で効力を持つものとします。</p>" +
+              "<p><strong>5. お問い合わせ</strong><br>本ポリシーに関するご質問は、このページ内のお問い合わせフォーム（対象アプリ：Pitatrim）よりご連絡ください。</p>",
             "privacy.otherTitle": "その他アプリ共通プライバシーポリシー",
             "privacy.otherBody":
               "<p>本ポリシーは、setarsが提供する、Spotrans Lens以外の全てのアプリケーションに共通して適用されます。</p>" +
@@ -757,6 +797,13 @@
               "<p><strong>Changes to This Policy</strong><br>The contents of this policy may change without notice as features are added. Any changes take effect once posted on this page.</p>" +
               "<p><strong>Contact</strong><br>For questions about this policy, please contact support@example.com.</p>" +
               '<p class="text-gray-400 text-xs">Note: This contact address is a placeholder — please replace it with your actual contact address before release.</p>',
+            "privacy.pitatrimTitle": "Pitatrim Privacy Policy",
+            "privacy.pitatrimBody":
+              "<p><strong>1. Information I Collect</strong><br>Pitatrim (\"the App\") performs all photo and document cropping and PDF conversion entirely on your device — the images you select are never sent to an external server. I may collect anonymous usage statistics (e.g., crash logs) to improve the app.</p>" +
+              "<p><strong>2. Third-Party Services</strong><br>This app does not use any third-party SDKs for advertising, in-app purchases, or analytics.</p>" +
+              "<p><strong>3. Children's Privacy</strong><br>This app is not primarily directed at children under 13, and I do not knowingly collect personal information from children.</p>" +
+              "<p><strong>4. Changes to This Policy</strong><br>The contents of this policy may change without notice as features are added. Any changes take effect once posted on this page.</p>" +
+              "<p><strong>5. Contact</strong><br>For questions about this policy, please use the contact form on this page (select \"Pitatrim\" as the app).</p>",
             "privacy.otherTitle": "Common Privacy Policy for Other Apps",
             "privacy.otherBody":
               "<p>This policy applies to all applications published by setars other than Spotrans Lens.</p>" +
