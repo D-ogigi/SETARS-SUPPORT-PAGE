@@ -625,19 +625,24 @@
       // ショーケースのカードとお問い合わせフォームのプルダウンが自動的に同期更新されます。
       // =====================================================================
       const myApps = [
-        {
-          id: "spotrans",
-          nameJa: "Spotrans Lens",
-          nameEn: "Spotrans Lens",
-          taglineJa:
-            "画面を囲むだけで一瞬でコピペ＆翻訳が完結する翻訳レンズユーティリティ",
-          taglineEn:
-            "Instant screen capture, OCR, and overlay translation lens for Mac",
-          icon: "Assets/AppIcon.appiconset/SpotransLensIcon.png", // ファイルが無い場合は単色アイコンに自動フォールバックします
-          storeUrl: "https://apps.apple.com/jp/app/spotrans-lens/id6791600681?mt=12",
-          privacyId: "privacy-spotrans",
-          isReleased: true,
-        },
+        // Spotrans Lens: 諸事情により配信停止のため、ショーケースとお問い合わせの
+        // プルダウンから一時的に非表示にしています。再配信する際はこのコメントを外してください。
+        // なお、プライバシーポリシーのセクション（下記HTML）は、既存ユーザーへの説明責任のため
+        // 配信停止後もそのまま残しています。
+        // {
+        //   id: "spotrans",
+        //   nameJa: "Spotrans Lens",
+        //   nameEn: "Spotrans Lens",
+        //   taglineJa:
+        //     "画面を囲むだけで一瞬でコピペ＆翻訳が完結する翻訳レンズユーティリティ",
+        //   taglineEn:
+        //     "Instant screen capture, OCR, and overlay translation lens for Mac",
+        //   icon: "Assets/AppIcon.appiconset/SpotransLensIcon.png", // ファイルが無い場合は単色アイコンに自動フォールバックします
+        //   storeUrl:
+        //     "https://apps.apple.com/jp/app/spotrans-lens/id6791600681?mt=12",
+        //   privacyId: "privacy-spotrans",
+        //   isReleased: true,
+        // },
         {
           id: "airtouchpad",
           nameJa: "AirTouchPad",
@@ -719,7 +724,7 @@
               "<p><strong>1. 収集する情報</strong><br>Spotrans Lensは、翻訳機能の提供にあたりカメラ映像を処理しますが、映像および画像データは端末上または一時的な処理のみに使用され、開発者のサーバーに保存されることはありません。アプリの利用状況（クラッシュログ、使用言語設定など）を匿名の統計情報として収集する場合があります。</p>" +
               "<p><strong>2. 情報の利用目的</strong><br>収集した情報は、アプリの品質改善、不具合の修正、機能改善の検討のためにのみ利用します。</p>" +
               "<p><strong>3. 第三者への提供</strong><br>翻訳処理のために外部の翻訳APIサービスを利用する場合がありますが、個人を特定できる情報を第三者に提供することはありません。</p>" +
-              "<p><strong>4. お問い合わせ</strong><br>本ポリシーに関するご質問は、このページ内のお問い合わせフォーム（対象アプリ：Spotrans Lens）よりご連絡ください。</p>" +
+              "<p><strong>4. お問い合わせ</strong><br>本ポリシーに関するご質問は、このページ内のお問い合わせフォームよりご連絡ください。</p>" +
               '<p class="text-gray-400 text-xs">※本文は一般的なプレースホルダーです。実際のデータ取得内容に応じて開発者ご自身で内容を更新してください。</p>',
             "privacy.airtouchpadTitle": "AirTouchPad プライバシーポリシー",
             "privacy.airtouchpadBody":
@@ -783,7 +788,7 @@
               "<p><strong>1. Information I Collect</strong><br>Spotrans Lens processes camera video to provide translation, but the video/image data is used only on-device or for temporary processing and is never stored on my servers. I may collect anonymous usage statistics (e.g., crash logs, language settings) to improve the app.</p>" +
               "<p><strong>2. How This Information Is Used</strong><br>Collected information is used solely to improve app quality, fix bugs, and evaluate new features.</p>" +
               "<p><strong>3. Third-Party Sharing</strong><br>I may use external translation APIs to perform translation, but I do not share personally identifiable information with third parties.</p>" +
-              '<p><strong>4. Contact</strong><br>For questions about this policy, please use the contact form on this page (select "Spotrans Lens" as the app).</p>' +
+              "<p><strong>4. Contact</strong><br>For questions about this policy, please use the contact form on this page.</p>" +
               '<p class="text-gray-400 text-xs">Note: This is generic placeholder text. Please update it to reflect the app\'s actual data practices.</p>',
             "privacy.airtouchpadTitle": "AirTouchPad Privacy Policy",
             "privacy.airtouchpadBody":
