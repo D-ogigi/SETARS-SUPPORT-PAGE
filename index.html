@@ -10,7 +10,8 @@
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      // Tailwind の拡張設定：やわらかいグラデーション背景で使う色を追加
+      // Tailwind の拡張設定：Apple の Human Interface Guidelines を参考に、
+      // 単一のアクセントカラー（accent）とニュートラルな黒（ink）だけを定義
       tailwind.config = {
         theme: {
           extend: {
@@ -24,8 +25,12 @@
                 "sans-serif",
               ],
             },
+            colors: {
+              accent: "#0071e3",
+              ink: "#1d1d1f",
+            },
             boxShadow: {
-              glass: "0 8px 32px 0 rgba(31, 38, 135, 0.15)",
+              glass: "0 8px 32px 0 rgba(31, 38, 135, 0.12)",
             },
           },
         },
@@ -33,16 +38,9 @@
     </script>
 
     <style>
-      /* ページ全体の淡いグラデーション背景（白・薄ピンク・薄紫） */
+      /* ページ全体の背景：Apple.com を参考にした、ほぼフラットなニュートラルトーン */
       body {
-        background: linear-gradient(
-          135deg,
-          #fdf2f8 0%,
-          #ffffff 35%,
-          #f5f3ff 70%,
-          #fdf2f8 100%
-        );
-        background-attachment: fixed;
+        background: #fbfbfd;
       }
 
       /* グラスモーフィズム（磨りガラス）カード */
@@ -84,6 +82,8 @@
       }
 
       /* アプリアイコン：画像 or CSSグラデーションへの自動フォールバック */
+      /* 背景は基本的に透明（カードに自然になじませる）。
+         画像の読み込みに失敗した場合のみ、JS側で単色にフォールバックします */
       .app-icon-wrap {
         width: 84px;
         height: 84px;
@@ -94,9 +94,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow:
-          0 10px 24px -6px rgba(0, 0, 0, 0.25),
-          inset 0 1px 1px rgba(255, 255, 255, 0.4);
+        background: transparent;
       }
       .app-icon-fallback-letter {
         color: #fff;
@@ -116,12 +114,12 @@
         transition: all 0.25s ease;
       }
       .lang-toggle-btn.active {
-        background: rgba(99, 102, 241, 0.9);
+        background: #1d1d1f;
         color: #fff;
-        box-shadow: 0 4px 12px -2px rgba(99, 102, 241, 0.5);
+        box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
       }
 
-      /* Coming Soon リボン */
+      /* Coming Soon リボン（単色フラット） */
       .ribbon {
         position: absolute;
         top: 14px;
@@ -131,9 +129,8 @@
         letter-spacing: 0.05em;
         padding: 4px 14px;
         border-radius: 999px 0 0 999px;
-        background: linear-gradient(135deg, #f59e0b, #f97316);
+        background: #1d1d1f;
         color: #fff;
-        box-shadow: 0 4px 10px -2px rgba(249, 115, 22, 0.5);
         z-index: 10;
       }
 
@@ -154,13 +151,13 @@
       /* フォームのフォーカスリング */
       .form-field:focus {
         outline: none;
-        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.35);
-        border-color: rgba(139, 92, 246, 0.6);
+        box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25);
+        border-color: rgba(0, 113, 227, 0.6);
       }
 
-      /* App Store風ダウンロードボタン（独自デザイン。Apple公式バッジ画像は使用していません） */
+      /* App Store風ダウンロードボタン（独自デザイン。Apple公式バッジ画像は使用していません。実際のボタンに合わせたフラットな黒） */
       .appstore-btn {
-        background: linear-gradient(135deg, #111827, #1f2937);
+        background: #000;
       }
     </style>
   </head>
@@ -172,20 +169,50 @@
         <div
           class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between"
         >
-          <div class="flex items-center gap-2">
-            <div
-              class="w-8 h-8 rounded-xl bg-gradient-to-br from-pink-400 via-purple-400 to-indigo-500 shadow-md"
-            ></div>
-            <div class="leading-tight">
-              <div class="font-bold text-gray-700 tracking-tight">setars</div>
-              <div
-                class="hidden sm:block text-[10px] text-gray-400 tracking-wide"
-                title="Simple Effective Tools for Automation, Remote-control & Support"
-              >
-                S.E.T.A.R.S. — Simple Effective Tools for Automation,
-                Remote-control &amp; Support
+          <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-xl bg-ink shadow-sm"></div>
+              <div class="leading-tight">
+                <div class="font-bold text-gray-700 tracking-tight">
+                  setars
+                </div>
+                <div
+                  class="hidden sm:block text-[10px] text-gray-400 tracking-wide"
+                  title="Simple Effective Tools for Automation, Remote-control & Support"
+                >
+                  S.E.T.A.R.S. — Simple Effective Tools for Automation,
+                  Remote-control &amp; Support
+                </div>
               </div>
             </div>
+
+            <!--
+              Buy Me a Coffee のリンク先について：
+              "setars" の部分を、あなた自身の buymeacoffee.com のユーザー名に書き換えてください。
+              （アカウント未作成の場合は https://www.buymeacoffee.com/ で作成できます）
+            -->
+            <a
+              href="https://www.buymeacoffee.com/setars"
+              target="_blank"
+              rel="noopener"
+              class="hidden sm:inline-flex btn-press items-center gap-1.5 bg-white/60 border border-white/70 rounded-full px-3 py-1.5 text-xs font-medium text-gray-600 hover:text-accent shadow-sm"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M4 10h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-5z" />
+                <path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17" />
+                <path d="M8 3c-.5 1 .5 1.5 0 2.5M12 3c-.5 1 .5 1.5 0 2.5" />
+              </svg>
+              <span data-i18n="common.supportMe">コーヒーをおごる</span>
+            </a>
           </div>
 
           <!-- 言語切替：日本語 / English -->
@@ -217,7 +244,7 @@
       <section class="text-center pt-16 sm:pt-20 pb-12 px-4">
         <p
           data-i18n="hero.tagline"
-          class="text-sm sm:text-base font-semibold tracking-wide bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent mb-3"
+          class="text-sm sm:text-base font-semibold tracking-wide text-accent mb-3"
         >
           さりげなく、役に立つ。
         </p>
@@ -225,13 +252,13 @@
           data-i18n="hero.title"
           class="text-3xl sm:text-5xl font-extrabold tracking-tight text-gray-800 mb-4"
         >
-          私たちが創ったアプリ
+          私が創ったアプリ
         </h1>
         <p
           data-i18n="hero.subtitle"
           class="max-w-2xl mx-auto text-gray-500 text-base sm:text-lg leading-relaxed"
         >
-          美しく、使いやすいアプリケーション体験をお届けします。ご質問・ご要望はいつでもお気軽にお問い合わせください。
+          Mac・iPhone向けに、使いやすさにこだわった小さなアプリを一人で作っています。ご質問・ご要望はお気軽にどうぞ。
         </p>
       </section>
 
@@ -243,7 +270,7 @@
           data-i18n="showcase.title"
           class="text-2xl font-bold text-gray-700 mb-6 text-center sm:text-left"
         >
-          アプリケーション一覧
+          自作アプリ
         </h2>
 
         <div
@@ -382,7 +409,7 @@
 
             <button
               type="submit"
-              class="btn-press w-full rounded-xl px-4 py-3 text-sm font-semibold text-white bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 shadow-md"
+              class="btn-press w-full rounded-xl px-4 py-3 text-sm font-semibold text-white bg-ink hover:opacity-90 shadow-md"
             >
               <span data-i18n="contact.submitBtn">送信する</span>
             </button>
@@ -505,13 +532,39 @@
     </main>
 
     <footer class="text-center pb-10 text-xs text-gray-400">
-      <div class="flex justify-center mb-4">
+      <div class="flex justify-center flex-wrap gap-3 mb-4">
+        <!--
+          Buy Me a Coffee のリンク先について：
+          "setars" の部分を、あなた自身の buymeacoffee.com のユーザー名に書き換えてください。
+        -->
+        <a
+          href="https://www.buymeacoffee.com/setars"
+          target="_blank"
+          rel="noopener"
+          class="btn-press inline-flex items-center gap-1.5 glass-card rounded-full px-4 py-1.5 text-gray-500 hover:text-accent"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 10h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-5z" />
+            <path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17" />
+            <path d="M8 3c-.5 1 .5 1.5 0 2.5M12 3c-.5 1 .5 1.5 0 2.5" />
+          </svg>
+          <span data-i18n="common.supportMe">コーヒーをおごる</span>
+        </a>
         <a
           href="https://x.com/SetarsSupport"
           target="_blank"
           rel="noopener"
           aria-label="X (Twitter): @SetarsSupport"
-          class="btn-press inline-flex items-center gap-1.5 glass-card rounded-full px-4 py-1.5 text-gray-500 hover:text-indigo-500"
+          class="btn-press inline-flex items-center gap-1.5 glass-card rounded-full px-4 py-1.5 text-gray-500 hover:text-accent"
         >
           <svg
             width="14"
@@ -547,7 +600,7 @@
             "画面を囲むだけで一瞬でコピペ＆翻訳が完結する翻訳レンズユーティリティ",
           taglineEn:
             "Instant screen capture, OCR, and overlay translation lens for Mac",
-          icon: "Assets/AppIcon.appiconset/icon_128x128.png", // ファイルが無い場合はCSSグラデーションのアイコンに自動フォールバックします
+          icon: "Assets/AppIcon.appiconset/SpotransLensIcon.png", // ファイルが無い場合は単色アイコンに自動フォールバックします
           storeUrl: "https://apps.apple.com/jp/app/spotrans-lens/id6791600681?mt=12",
           privacyId: "privacy-spotrans",
           isReleased: true,
@@ -560,10 +613,23 @@
             "iPhoneをMacの完全ワイヤレスなトラックパッド＆キーボードに変える、ローカルネットワーク完結型のリモート操作アプリ",
           taglineEn:
             "Turn your iPhone into a fully wireless trackpad and keyboard for your Mac — remote control that never leaves your local network",
-          icon: "Assets/AppIcon.appiconset/AirTouchPadIcon.png", // ファイルが無い場合はCSSグラデーションのアイコンに自動フォールバックします
+          icon: "Assets/AppIcon.appiconset/AirTouchPadIcon.png", // ファイルが無い場合は単色アイコンに自動フォールバックします
           storeUrl: "https://d-ogigi.github.io/airtouchpad/", // App Store公開後に実際のURLへ書き換えてください
           privacyId: "privacy-airtouchpad",
           isReleased: true,
+        },
+        {
+          id: "pitatrim",
+          nameJa: "Pitatrim",
+          nameEn: "Pitatrim",
+          taglineJa:
+            "写真や書類を囲むだけでピタッとトリミングし、美しいPDFに変換できるユーティリティ",
+          taglineEn:
+            "Snap-crop your photos and documents and turn them into beautifully clean PDFs",
+          icon: "Assets/AppIcon.appiconset/PitatrimIcon.png", // ファイルが無い場合は単色アイコンに自動フォールバックします
+          storeUrl: "#", // App Store公開後に実際のURLへ書き換えてください
+          privacyId: "privacy-common",
+          isReleased: false, // App Store公開が確定したら true に変更してください
         },
         {
           id: "coming-soon",
@@ -580,13 +646,8 @@
         },
       ];
 
-      // アイコンがフォールバックした際に使うグラデーションパレット（配列の順番で自動的に割り当てられます）
-      const ICON_GRADIENTS = [
-        "linear-gradient(135deg, #f472b6 0%, #a78bfa 55%, #6366f1 100%)",
-        "linear-gradient(135deg, #34d399 0%, #22d3ee 60%, #6366f1 100%)",
-        "linear-gradient(135deg, #fbbf24 0%, #f472b6 60%, #a78bfa 100%)",
-        "linear-gradient(135deg, #60a5fa 0%, #818cf8 55%, #c084fc 100%)",
-      ];
+      // アイコンがフォールバックした際に使う単色パレット（配列の順番で自動的に割り当てられます）
+      const ICON_COLORS = ["#0071e3", "#00c7be", "#ff9500"];
 
       (function () {
         // ===================== 静的なUI文言の翻訳データ（アプリ固有情報は myApps 側で管理） =====================
@@ -594,14 +655,16 @@
           ja: {
             "meta.title": "setars | アプリポートフォリオ & サポート窓口",
             "hero.tagline": "さりげなく、役に立つ。",
-            "hero.title": "私たちが創ったアプリ",
+            "hero.title": "私が創ったアプリ",
             "hero.subtitle":
-              "美しく、使いやすいアプリケーション体験をお届けします。ご質問・ご要望はいつでもお気軽にお問い合わせください。",
-            "showcase.title": "アプリケーション一覧",
+              "Mac・iPhone向けに、使いやすさにこだわった小さなアプリを一人で作っています。ご質問・ご要望はお気軽にどうぞ。",
+            "showcase.title": "自作アプリ",
             "common.downloadBtn": "App Storeでダウンロード",
             "common.supportBtn": "お問い合わせ",
             "common.comingSoon": "近日公開",
             "common.viewPrivacy": "プライバシーポリシーを見る",
+            "common.supportMe": "コーヒーをおごる",
+            "common.writeReview": "レビューを書く",
             "contact.title": "お問い合わせ",
             "contact.subtitle":
               "バグ報告、機能のご要望、その他のご質問など、どんなことでもお気軽にご連絡ください。全て無料でサポートいたします。",
@@ -620,7 +683,7 @@
             "privacy.title": "プライバシーポリシー",
             "privacy.spotransTitle": "Spotrans Lens プライバシーポリシー",
             "privacy.spotransBody":
-              "<p><strong>1. 収集する情報</strong><br>Spotrans Lensは、翻訳機能の提供にあたりカメラ映像を処理しますが、映像および画像データは端末上または一時的な処理のみに使用され、当社サーバーに保存されません。アプリの利用状況（クラッシュログ、使用言語設定など）を匿名の統計情報として収集する場合があります。</p>" +
+              "<p><strong>1. 収集する情報</strong><br>Spotrans Lensは、翻訳機能の提供にあたりカメラ映像を処理しますが、映像および画像データは端末上または一時的な処理のみに使用され、開発者のサーバーに保存されることはありません。アプリの利用状況（クラッシュログ、使用言語設定など）を匿名の統計情報として収集する場合があります。</p>" +
               "<p><strong>2. 情報の利用目的</strong><br>収集した情報は、アプリの品質改善、不具合の修正、機能改善の検討のためにのみ利用します。</p>" +
               "<p><strong>3. 第三者への提供</strong><br>翻訳処理のために外部の翻訳APIサービスを利用する場合がありますが、個人を特定できる情報を第三者に提供することはありません。</p>" +
               "<p><strong>4. お問い合わせ</strong><br>本ポリシーに関するご質問は、このページ内のお問い合わせフォーム（対象アプリ：Spotrans Lens）よりご連絡ください。</p>" +
@@ -649,15 +712,17 @@
           en: {
             "meta.title": "setars | App Portfolio & Support Desk",
             "hero.tagline": "Quietly useful, every day.",
-            "hero.title": "Apps We've Built",
+            "hero.title": "Apps I've Built",
             "hero.subtitle":
-              "We deliver beautiful, effortless app experiences. Feel free to reach out anytime with questions or requests.",
-            "showcase.title": "Our Applications",
+              "I build small, reliable apps for Mac and iPhone, solo. Got a question or a request? I'd love to hear from you.",
+            "showcase.title": "My Apps",
             "common.downloadBtn": "Download on the App Store",
             "common.supportBtn": "Contact Support",
             "common.comingSoon": "Coming Soon",
             "common.viewPrivacy": "View Privacy Policy",
-            "contact.title": "Contact Us",
+            "common.supportMe": "Buy Me a Coffee",
+            "common.writeReview": "Write a Review",
+            "contact.title": "Contact Me",
             "contact.subtitle":
               "Bug reports, feature requests, or general questions — feel free to reach out. Support is completely free.",
             "contact.labelApp": "Select App",
@@ -675,27 +740,27 @@
             "privacy.title": "Privacy Policy",
             "privacy.spotransTitle": "Spotrans Lens Privacy Policy",
             "privacy.spotransBody":
-              "<p><strong>1. Information We Collect</strong><br>Spotrans Lens processes camera video to provide translation, but the video/image data is used only on-device or for temporary processing and is not stored on our servers. We may collect anonymous usage statistics (e.g., crash logs, language settings) to improve the app.</p>" +
-              "<p><strong>2. How We Use Information</strong><br>Collected information is used solely to improve app quality, fix bugs, and evaluate new features.</p>" +
-              "<p><strong>3. Third-Party Sharing</strong><br>We may use external translation APIs to perform translation, but we do not share personally identifiable information with third parties.</p>" +
+              "<p><strong>1. Information I Collect</strong><br>Spotrans Lens processes camera video to provide translation, but the video/image data is used only on-device or for temporary processing and is never stored on my servers. I may collect anonymous usage statistics (e.g., crash logs, language settings) to improve the app.</p>" +
+              "<p><strong>2. How This Information Is Used</strong><br>Collected information is used solely to improve app quality, fix bugs, and evaluate new features.</p>" +
+              "<p><strong>3. Third-Party Sharing</strong><br>I may use external translation APIs to perform translation, but I do not share personally identifiable information with third parties.</p>" +
               '<p><strong>4. Contact</strong><br>For questions about this policy, please use the contact form on this page (select "Spotrans Lens" as the app).</p>' +
               '<p class="text-gray-400 text-xs">Note: This is generic placeholder text. Please update it to reflect the app\'s actual data practices.</p>',
             "privacy.airtouchpadTitle": "AirTouchPad Privacy Policy",
             "privacy.airtouchpadBody":
-              '<p><strong>Information We Collect</strong><br>AirTouchPad ("the App") sends and receives mouse and keyboard input data between the iPhone app and a resident Mac server, exclusively over the same local network (Wi-Fi). This data is never transmitted to or stored on the developer\'s servers — it is exchanged only directly between your iPhone and Mac.</p>' +
+              '<p><strong>Information I Collect</strong><br>AirTouchPad ("the App") sends and receives mouse and keyboard input data between the iPhone app and a resident Mac server, exclusively over the same local network (Wi-Fi). This data is never transmitted to or stored on the developer\'s servers — it is exchanged only directly between your iPhone and Mac.</p>' +
               "<p><strong>Third-Party Services</strong><br>This app uses the following third-party services. Please refer to each provider's own privacy policy for details on how they handle data.</p>" +
               '<ul class="list-disc pl-5 space-y-1">' +
               "<li><strong>Apple StoreKit</strong>: Used to process in-app purchase payments (premium feature purchases). Payment information is managed by Apple; the developer does not retain any card details.</li>" +
               "<li><strong>Google AdMob (Google Mobile Ads SDK)</strong>: Used to display ads in the free version and to play rewarded video ads. The device's advertising identifier (IDFA) may be used for ad delivery. Personalized ads are served only if the user grants permission via iOS's App Tracking Transparency prompt.</li>" +
               "</ul>" +
-              "<p><strong>Children's Privacy</strong><br>This app is not primarily directed at children under 13, and we do not knowingly collect personal information from children.</p>" +
+              "<p><strong>Children's Privacy</strong><br>This app is not primarily directed at children under 13, and I do not knowingly collect personal information from children.</p>" +
               "<p><strong>Changes to This Policy</strong><br>The contents of this policy may change without notice as features are added. Any changes take effect once posted on this page.</p>" +
               "<p><strong>Contact</strong><br>For questions about this policy, please contact support@example.com.</p>" +
               '<p class="text-gray-400 text-xs">Note: This contact address is a placeholder — please replace it with your actual contact address before release.</p>',
             "privacy.otherTitle": "Common Privacy Policy for Other Apps",
             "privacy.otherBody":
               "<p>This policy applies to all applications published by setars other than Spotrans Lens.</p>" +
-              "<p><strong>1. Information We Collect</strong><br>Each app collects only the minimum information necessary to provide its features (settings, usage logs, crash reports, etc.). Any additional data collection specific to an app will be disclosed within that app or on this page.</p>" +
+              "<p><strong>1. Information I Collect</strong><br>Each app collects only the minimum information necessary to provide its features (settings, usage logs, crash reports, etc.). Any additional data collection specific to an app will be disclosed within that app or on this page.</p>" +
               "<p><strong>2. Data Storage and Deletion</strong><br>Collected information is managed with appropriate security measures and deleted within a reasonable period once no longer needed.</p>" +
               "<p><strong>3. Contact</strong><br>For inquiries about a specific app, please select that app in the contact form on this page.</p>" +
               '<p class="text-gray-400 text-xs">Note: This is generic placeholder text. Please update it whenever a new app is released.</p>',
@@ -729,6 +794,17 @@
           return lang === "ja" ? app.taglineJa : app.taglineEn;
         }
 
+        // App StoreのURLから「レビューを書く」への直接リンクを生成します。
+        // App Store未公開のアプリ（storeUrlがApp StoreのURLでない）の場合は null を返し、リンクを表示しません。
+        function getReviewUrl(app) {
+          var match = /apps\.apple\.com\/[a-z]{2}\/app\/[^/]+\/id(\d+)/.exec(
+            app.storeUrl || "",
+          );
+          return match
+            ? "https://apps.apple.com/app/id" + match[1] + "?action=write-review"
+            : null;
+        }
+
         // ===================== myApps からショーケースカードを自動生成 =====================
         function renderShowcase(lang) {
           var grid = document.getElementById("showcase-grid");
@@ -741,8 +817,9 @@
               var letter = escapeHtml(
                 getAppName(app, lang).charAt(0).toUpperCase() || "?",
               );
-              var gradient = ICON_GRADIENTS[index % ICON_GRADIENTS.length];
+              var iconColor = ICON_COLORS[index % ICON_COLORS.length];
               var iconClass = app.isReleased ? "" : "grayscale opacity-70";
+              var reviewUrl = getReviewUrl(app);
 
               var ribbonHtml = app.isReleased
                 ? ""
@@ -771,8 +848,8 @@
                 '<div class="flex items-start gap-4 mb-5">' +
                 '<div class="app-icon-wrap ' +
                 iconClass +
-                '" style="background:' +
-                gradient +
+                '" data-fallback-color="' +
+                iconColor +
                 '">' +
                 '<span class="app-icon-fallback-letter">' +
                 letter +
@@ -781,7 +858,7 @@
                 escapeHtml(app.icon) +
                 '" alt="' +
                 name +
-                '" class="app-icon-img" onerror="this.style.display=\'none\'">' +
+                '" class="app-icon-img" onerror="this.style.display=\'none\';this.parentElement.style.background=this.parentElement.dataset.fallbackColor;">' +
                 "</div>" +
                 '<div class="flex-1">' +
                 '<h3 class="text-xl font-bold text-gray-800">' +
@@ -797,16 +874,26 @@
                 '<button type="button" data-support-app="' +
                 escapeHtml(app.id) +
                 '" ' +
-                'class="btn-press flex-1 rounded-xl px-4 py-2.5 text-sm font-semibold border border-indigo-300 text-indigo-600 bg-white/70 hover:bg-indigo-50">' +
+                'class="btn-press flex-1 rounded-xl px-4 py-2.5 text-sm font-semibold border border-gray-300 text-gray-800 bg-white/70 hover:bg-gray-50">' +
                 escapeHtml(t["common.supportBtn"]) +
                 "</button>" +
                 "</div>" +
+                '<div class="flex items-center flex-wrap gap-x-3 gap-y-1">' +
                 '<button type="button" data-privacy-link="' +
                 escapeHtml(app.privacyId) +
                 '" ' +
-                'class="text-xs text-gray-400 hover:text-indigo-500 underline self-start">' +
+                'class="text-xs text-gray-400 hover:text-accent underline">' +
                 escapeHtml(t["common.viewPrivacy"]) +
                 "</button>" +
+                (reviewUrl
+                  ? '<a href="' +
+                    escapeHtml(reviewUrl) +
+                    '" target="_blank" rel="noopener" ' +
+                    'class="text-xs text-gray-400 hover:text-accent underline">' +
+                    escapeHtml(t["common.writeReview"]) +
+                    "</a>"
+                  : "") +
+                "</div>" +
                 "</div>"
               );
             })
