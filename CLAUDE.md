@@ -104,16 +104,15 @@ setars（個人開発者）が公開している、自作アプリの一覧（�
 
 ## まだプレースホルダーのままの箇所（要対応）
 
-- **Buy Me a Coffee**: `https://www.buymeacoffee.com/setars` は仮のユーザー名。
-  ヘッダーとフッターの2箇所にリンクがある。アカウント作成後に実ユーザー名へ
-  差し替えが必要。
-- **AirTouchPad / Pitatrim の `storeUrl`**: 上記の通り、正式なApp Store URL
-  確定後に差し替えが必要。
+- **AirTouchPad / Pitatrim の `storeUrl`**: 正式なApp Store URL確定後に
+  差し替えが必要（詳細は上記「現在のアプリのステータス」参照）。
 
 ## 既に設定済みのもの（プレースホルダーではない）
 
 - お問い合わせフォームの送信先（FormSubmit）: `setars.support@gmail.com`
 - X (Twitter): `https://x.com/SetarsSupport`（フッターにアイコンリンクあり）
+- Buy Me a Coffee: `https://www.buymeacoffee.com/setars`（アカウント作成済み。
+  ヘッダー・フッターの2箇所にリンクあり）
 
 ## Gitのコミット規約
 
@@ -124,6 +123,39 @@ setars（個人開発者）が公開している、自作アプリの一覧（�
 
 `git push` はユーザーの明示的な許可を得てから行うこと（このプロジェクトでは
 毎回「コミットしてプッシュしてください」と依頼されてから実行している）。
+
+## 未実装・保留中の項目
+
+- **「次の名作アプリ（coming-soon）」プレースホルダーの扱い**: Pitatrim追加時に
+  「このプレースホルダーは削除してよいか」とユーザーに確認したが、**まだ回答が
+  無く保留中**。指示が無い限り勝手に削除しないこと。
+- **アイコン背景を画像の色に自動で合わせる方式**: 検討したが不採用。
+  代わりに「背景は常に透明、画像読み込み失敗時のみ`ICON_COLORS`で単色
+  フォールバック」という現行方式を採用した（`app-icon-wrap` の
+  `data-fallback-color` 属性と `onerror` ハンドラ）。将来「画像ごとに背景色を
+  自動抽出したい」という要望が出たら、この不採用の経緯を踏まえて提案すること。
+- **Buy Me a Coffee以外の投げ銭サービス**: GitHub SponsorsやKo-fiも候補に
+  挙がったが、アカウント未作成のためBuy Me a Coffeeのみ実装。他サービスの
+  追加・変更は未実装。
+
+## GitHub接続設定（このリポジトリ専用）
+
+このマシンではGitHubの認証情報（`gh` CLIのログイン状態やmacOSキーチェーン）が
+OS全体で共有されており、他プロジェクトやVSCodeで別アカウントにログインすると
+このリポジトリのpush権限にも影響してしまう問題が過去に発生した
+（`D-ogigi` に書き込み権限の無い別アカウントの認証情報が使われてpushが403エラーに）。
+
+対策として、**このリポジトリだけ常にD-ogigiアカウントを使うようSSH接続に固定**した：
+
+- 専用SSH鍵: `~/.ssh/id_ed25519_d-ogigi`（D-ogigiアカウントのGitHub設定に公開鍵を登録済み）
+- `~/.ssh/config` に `Host github-d-ogigi` のエイリアスを追加
+- このリポジトリの `origin` は `git@github-d-ogigi:D-ogigi/SETARS-SUPPORT-PAGE.git`
+  （HTTPSではなくSSH）
+
+**注意**: 今後もし `git remote -v` の結果が `https://github.com/...` に戻っていたら、
+何らかの理由でHTTPSに戻ってしまっている（＝また403エラーが起きる可能性がある）
+ということなので、上記のSSH URLに戻すこと。他のプロジェクトのGit設定には
+一切影響しない、この作業ディレクトリだけの設定。
 
 ## セキュリティ・プライバシー上の注意
 
